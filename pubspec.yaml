@@ -26,3 +26,4 @@ flutter:
 
 assets:
   - assets/icons/taxi.png
+  - assets/maps_style/maps_style.txt

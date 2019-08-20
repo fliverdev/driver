@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:driver/utils/functions.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class MyMapViewPage extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class MyMapViewPage extends StatefulWidget {
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
+  String _mapStyle;
   var currentLocation;
   BitmapDescriptor myIcon;
   GoogleMapController mapController;
@@ -22,6 +24,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         ImageConfiguration(size: Size(48, 48)), 'assets/my_icon.png')
         .then((onValue) {
       myIcon = onValue;
+    });
+    rootBundle.loadString('assets/map_style.txt').then((string) {
+      _mapStyle = string;
     });
   } // gets current user location when the app loads
 
