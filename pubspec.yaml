@@ -25,5 +25,5 @@ flutter:
   uses-material-design: true
 
 assets:
-  - assets/icons/taxi.png
-  - assets/maps_style/maps_style.txt
+  - assets/taxi.png
+  - assets/map_style.txt

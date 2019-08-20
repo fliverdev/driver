@@ -11,7 +11,6 @@ class MyMapViewPage extends StatefulWidget {
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
-  String _mapStyle;
   var currentLocation;
   BitmapDescriptor myIcon;
   GoogleMapController mapController;
@@ -21,18 +20,15 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     super.initState();
     _getCurrentLocation();
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(48, 48)), 'assets/icons/taxi.png')
+        ImageConfiguration(size: Size(48, 48)), 'assets/taxi.png')
         .then((onValue) {
       myIcon = onValue;
-    });
-    rootBundle.loadString('assets/maps_style/maps_style.txt').then((string) {
-      _mapStyle = string;
     });
   } // gets current user location when the app loads
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    mapController.setMapStyle(_mapStyle);
+    mapController.setMapStyle('[]');//add style here
   }
 
   _getCurrentLocation() {
