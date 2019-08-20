@@ -21,17 +21,18 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     super.initState();
     _getCurrentLocation();
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(48, 48)), 'assets/my_icon.png')
+        ImageConfiguration(size: Size(48, 48)), 'assets/icons/taxi.png')
         .then((onValue) {
       myIcon = onValue;
     });
-    rootBundle.loadString('assets/map_style.txt').then((string) {
+    rootBundle.loadString('assets/maps_style/maps_style.txt').then((string) {
       _mapStyle = string;
     });
   } // gets current user location when the app loads
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    mapController.setMapStyle(_mapStyle);
   }
 
   _getCurrentLocation() {
@@ -58,7 +59,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
           target: LatLng(currentLocation.latitude, currentLocation.longitude),
           zoom: 17.0,
           bearing: 90.0,
-          tilt: 45.0,
+          tilt: 0.0,
         ),
       ),
     );
