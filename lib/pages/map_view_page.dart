@@ -145,52 +145,52 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 10.0,
-              right: 15.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('Add marker'),
-                    onPressed: _addMarker,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  RaisedButton(
-                    child: Text('Get location'),
-                    onPressed: _animateToCurrentLocation,
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 60.0,
-              right: 15.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('Write to DB'),
-                    onPressed: _writeGeoPointToDb,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  RaisedButton(
-                    child: Text('Dark mode'),
-                    onPressed: () {
-                      DynamicTheme.of(context).setBrightness(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Brightness.light
-                              : Brightness.dark);
-                      _onMapCreated(mapController); //buggy
-                    },
-                  ),
-                ],
-              ),
-            ),
+//            Positioned(
+//              bottom: 10.0,
+//              right: 15.0,
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  RaisedButton(
+//                    child: Text('Add marker'),
+//                    onPressed: _addMarker,
+//                  ),
+//                  SizedBox(
+//                    width: 10.0,
+//                  ),
+//                  RaisedButton(
+//                    child: Text('Get location'),
+//                    onPressed: _animateToCurrentLocation,
+//                  ),
+//                ],
+//              ),
+//            ),
+//            Positioned(
+//              bottom: 60.0,
+//              right: 15.0,
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  RaisedButton(
+//                    child: Text('Write to DB'),
+//                    onPressed: _writeGeoPointToDb,
+//                  ),
+//                  SizedBox(
+//                    width: 10.0,
+//                  ),
+//                  RaisedButton(
+//                    child: Text('Dark mode'),
+//                    onPressed: () {
+//                      DynamicTheme.of(context).setBrightness(
+//                          Theme.of(context).brightness == Brightness.dark
+//                              ? Brightness.light
+//                              : Brightness.dark);
+//                      _onMapCreated(mapController); //buggy
+//                    },
+//                  ),
+//                ],
+//              ),
+//            ),
           ],
         ),
       ),
