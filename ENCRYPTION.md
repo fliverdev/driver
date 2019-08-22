@@ -73,4 +73,4 @@ import GoogleMaps
 
 ### Google Services for Firebase
 
-The `google-services.json` and `GoogleService-Info.plist` can be downloaded from your Firebase project for Android and iOS respectively. Replace the new files with the older, encrypted ones.
+The `google-services.json` and `GoogleService-Info.plist` can be downloaded from your Firebase project for Android and iOS respectively. Replace the old encrypted files with the newly downloaded ones.
