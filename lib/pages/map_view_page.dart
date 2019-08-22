@@ -1,9 +1,16 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/functions.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:driver/utils/map_style.dart';
 
 class MyMapViewPage extends StatefulWidget {
   @override
@@ -12,54 +19,82 @@ class MyMapViewPage extends StatefulWidget {
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
-  BitmapDescriptor myIcon;
+  final Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Set<Circle> _circle = {};
+
   GoogleMapController mapController;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Firestore firestore = Firestore.instance;
+  Geoflutterfire geo = Geoflutterfire();
 
   void initState() {
     super.initState();
     _getCurrentLocation();
-    BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(48, 48)), 'assets/taxi.png')
-        .then((onValue) {
-      myIcon = onValue;
-    });
   } // gets current user location when the app loads
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    mapController.setMapStyle('[{ "elementType": "geometry", "stylers": [ { "color": "#ebe3cd" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#523735" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f1e6" } ] }, { "featureType": "administrative", "elementType": "geometry.stroke", "stylers": [ { "color": "#c9b2a6" } ] }, { "featureType": "administrative.land_parcel", "elementType": "geometry.stroke", "stylers": [ { "color": "#dcd2be" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#ae9e90" } ] }, { "featureType": "landscape.natural", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#93817c" } ] }, { "featureType": "poi.business", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [ { "color": "#a5b076" } ] }, { "featureType": "poi.park", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#447530" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#f5f1e6" } ] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [ { "color": "#fdfcf8" } ] }, { "featureType": "road.arterial", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#f8c967" } ] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [ { "color": "#e9bc62" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry", "stylers": [ { "color": "#e98d58" } ] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry.stroke", "stylers": [ { "color": "#db8555" } ] }, { "featureType": "road.local", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#806b63" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "transit.line", "elementType": "labels.text.fill", "stylers": [ { "color": "#8f7d77" } ] }, { "featureType": "transit.line", "elementType": "labels.text.stroke", "stylers": [ { "color": "#ebe3cd" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "water", "elementType": "geometry.fill", "stylers": [ { "color": "#b9d3c2" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#92998d" } ] } ]');
-    //enable this for Aubergine //mapController.setMapStyle('[ { "elementType": "geometry", "stylers": [ { "color": "#1d2c4d" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#8ec3b9" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#1a3646" } ] }, { "featureType": "administrative.country", "elementType": "geometry.stroke", "stylers": [ { "color": "#4b6878" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#64779e" } ] }, { "featureType": "administrative.province", "elementType": "geometry.stroke", "stylers": [ { "color": "#4b6878" } ] }, { "featureType": "landscape.man_made", "elementType": "geometry.stroke", "stylers": [ { "color": "#334e87" } ] }, { "featureType": "landscape.natural", "elementType": "geometry", "stylers": [ { "color": "#023e58" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#283d6a" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#6f9ba5" } ] }, { "featureType": "poi", "elementType": "labels.text.stroke", "stylers": [ { "color": "#1d2c4d" } ] }, { "featureType": "poi.business", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [ { "color": "#023e58" } ] }, { "featureType": "poi.park", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#3C7680" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#304a7d" } ] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [ { "color": "#98a5be" } ] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [ { "color": "#1d2c4d" } ] }, { "featureType": "road.arterial", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#2c6675" } ] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [ { "color": "#255763" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [ { "color": "#b0d5ce" } ] }, { "featureType": "road.highway", "elementType": "labels.text.stroke", "stylers": [ { "color": "#023e58" } ] }, { "featureType": "road.local", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "labels.text.fill", "stylers": [ { "color": "#98a5be" } ] }, { "featureType": "transit", "elementType": "labels.text.stroke", "stylers": [ { "color": "#1d2c4d" } ] }, { "featureType": "transit.line", "elementType": "geometry.fill", "stylers": [ { "color": "#283d6a" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#3a4762" } ] }, { "featureType": "water", "elementType": "geometry", "stylers": [ { "color": "#0e1626" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#4e6d70" } ] } ]')
-  } // adds map styling
+    mapController
+        .setMapStyle(isThemeCurrentlyDark(context) ? retro : aubergine); //buggy
+  }
 
-  _getCurrentLocation() {
+  void _getCurrentLocation() {
     Geolocator().getCurrentPosition().then((currLoc) {
       setState(() {
         currentLocation = currLoc;
+        _circle.add(Circle(
+          circleId: CircleId(
+              LatLng(currentLocation.latitude, currentLocation.longitude)
+                  .toString()),
+          center: LatLng(currentLocation.latitude, currentLocation.longitude),
+          radius: 75,
+          fillColor: MyColors.translucentColor,
+          strokeColor: MyColors.primaryColor,
+          visible: true,
+        ));
       });
     });
     return currentLocation;
   }
 
   void _addMarker() {
+    var markerIdVal = Random().toString(); // TODO: don't use Random()
+    final MarkerId markerId = MarkerId(markerIdVal);
+
     var marker = Marker(
+      markerId: markerId,
       position: LatLng(currentLocation.latitude, currentLocation.longitude),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-      infoWindow: InfoWindow(title: 'Marker Title', snippet: 'Marker Snipper'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(147.5), // closest color i
+      // could get
+      infoWindow: InfoWindow(title: 'Marker Title', snippet: 'Marker Snippet'),
+      onTap: doNothing,
     );
+
+    setState(() {
+      markers[markerId] = marker;
+    });
   }
 
-  void _animateToUser() async {
+  void _animateToCurrentLocation() async {
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(currentLocation.latitude, currentLocation.longitude),
-          zoom: 17.0,
+          zoom: 17.5,
           bearing: 90.0,
-          tilt: 0.0,
+          tilt: 45.0,
         ),
       ),
     );
+  }
+
+  Future<DocumentReference> _writeGeoPointToDb() async {
+    var pos = await LatLng(currentLocation.latitude, currentLocation.longitude);
+    GeoFirePoint point = geo.point(
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude);
+    return firestore.collection('locations').add({
+      'position': point.data,
+    });
   }
 
   @override
@@ -76,9 +111,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
               compassEnabled: false,
               initialCameraPosition: CameraPosition(
                 target:
-                    LatLng(currentLocation.latitude, currentLocation.longitude),
+                LatLng(currentLocation.latitude, currentLocation.longitude),
                 zoom: 15.0,
               ),
+              markers: Set<Marker>.of(markers.values),
+              circles: _circle,
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -91,7 +128,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                   IconButton(
                     icon: Icon(Icons.menu),
                     tooltip: 'Menu',
-                    color: invertColorsMild(context),
+                    color: invertColorsStrong(context),
                     iconSize: 22.0,
                     onPressed: doNothing,
                   ),
@@ -102,7 +139,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       fontWeight: FontWeight.w600,
                       fontSize: 24.0,
                       fontStyle: FontStyle.italic,
-                      color: invertColorsMild(context),
+                      color: invertColorsStrong(context),
                     ),
                   ),
                 ],
@@ -115,22 +152,41 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
-                    child: Text('Button 1'),
-                    onPressed: doNothing,
+                    child: Text('Add marker'),
+                    onPressed: _addMarker,
                   ),
                   SizedBox(
                     width: 10.0,
                   ),
                   RaisedButton(
                     child: Text('Get location'),
-                    onPressed: _animateToUser,
+                    onPressed: _animateToCurrentLocation,
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 60.0,
+              right: 15.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('Write to DB'),
+                    onPressed: _writeGeoPointToDb,
                   ),
                   SizedBox(
                     width: 10.0,
                   ),
                   RaisedButton(
-                    child: Text('Button 3'),
-                    onPressed: doNothing,
+                    child: Text('Dark mode'),
+                    onPressed: () {
+                      DynamicTheme.of(context).setBrightness(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Brightness.light
+                              : Brightness.dark);
+                      _onMapCreated(mapController); //buggy
+                    },
                   ),
                 ],
               ),
