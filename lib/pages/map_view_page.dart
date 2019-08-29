@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
