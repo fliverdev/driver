@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -23,8 +21,6 @@ class MyMapViewPage extends StatefulWidget {
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
   var clients = [];
-  final Set<Circle> _circle = {};
-
   final Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   GoogleMapController mapController;
@@ -48,16 +44,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Geolocator().getCurrentPosition().then((currLoc) {
       setState(() {
         currentLocation = currLoc;
-        _circle.add(Circle(
-          circleId: CircleId(
-              LatLng(currentLocation.latitude, currentLocation.longitude)
-                  .toString()),
-          center: LatLng(currentLocation.latitude, currentLocation.longitude),
-          radius: 75,
-          fillColor: MyColors.translucentColor,
-          strokeColor: MyColors.primaryColor,
-          visible: true,
-        ));
         _populateClients();
       });
     });
@@ -127,7 +113,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 zoom: 15.0,
               ),
               markers: Set<Marker>.of(markers.values),
-              circles: _circle,
             ),
             Positioned(
               top: 40.0,
@@ -136,7 +121,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Fliver Driver',
+                    'Fliver चालक',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24.0,
@@ -163,7 +148,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
             child: Icon(Icons.location_on),
             foregroundColor: invertColorsTheme(context),
             backgroundColor: invertInvertColorsTheme(context),
-            label: 'Mark location',
+            label: 'आपका स्थान',
             labelStyle: TextStyle(
                 color: MyColors.accentColor, fontWeight: FontWeight.w500),
             onTap: () {
@@ -174,7 +159,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
             child: Icon(Icons.lightbulb_outline),
             foregroundColor: invertColorsTheme(context),
             backgroundColor: invertInvertColorsTheme(context),
-            label: 'Toggle lights',
+            label: 'डार्क मोड',
             labelStyle: TextStyle(
                 color: MyColors.accentColor, fontWeight: FontWeight.w500),
             onTap: () {
@@ -191,7 +176,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
             child: Icon(Icons.info_outline),
             foregroundColor: invertColorsTheme(context),
             backgroundColor: invertInvertColorsTheme(context),
-            label: 'About',
+            label: 'जानकारी',
             labelStyle: TextStyle(
                 color: MyColors.accentColor, fontWeight: FontWeight.w500),
             onTap: () {

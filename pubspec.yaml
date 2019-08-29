@@ -26,29 +26,29 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
 flutter:
   uses-material-design: true
 
-assets:
-  - assets/images/
+  assets:
+    - assets/images/
 
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik/Rubik-Regular.ttf
+        - asset: assets/fonts/Rubik/Rubik-Medium.ttf
+        - asset: assets/fonts/Rubik/Rubik-Bold.ttf
+        - asset: assets/fonts/Rubik/Rubik-Italic.ttf
+          style: italic
 
-fonts:
-  - family: Rubik
-    fonts:
-      - asset: assets/fonts/Rubik/Rubik-Regular.ttf
-      - asset: assets/fonts/Rubik/Rubik-Medium.ttf
-      - asset: assets/fonts/Rubik/Rubik-Bold.ttf
-      - asset: assets/fonts/Rubik/Rubik-Italic.ttf
-        style: italic
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono/RobotoMono-Regular.ttf
+        - asset: assets/fonts/RobotoMono/RobotoMono-Medium.ttf
+        - asset: assets/fonts/RobotoMono/RobotoMono-Bold.ttf
 
-  - family: RobotoMono
-    fonts:
-      - asset: assets/fonts/RobotoMono/RobotoMono-Regular.ttf
-      - asset: assets/fonts/RobotoMono/RobotoMono-Medium.ttf
-      - asset: assets/fonts/RobotoMono/RobotoMono-Bold.ttf
-
-  - family: Nunito
-    fonts:
-      - asset: assets/fonts/Nunito/Nunito-Regular.ttf
-      - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf

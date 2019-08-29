@@ -74,9 +74,9 @@ class _MyAboutPageState extends State<MyAboutPage> {
                             right: 15.0,
                           ),
                           child: Text(
-                            'Fliver is an app developed by a bunch of '
-                            'developers and designers who believe in open'
-                            ' source software.',
+                            'Fliver डेवलपर्स और डिजाइनरों'
+                            'की एक टीम द्वारा विकसित'
+                            'एक ऐप है |',
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
@@ -90,8 +90,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
                             right: 15.0,
                           ),
                           child: Text(
-                            'We\'re also part-time Computer Engineering '
-                            'students, so yeah.',
+                            'हम कंप्यूटर इंजीनियरिंग के छात्र हैं |',
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
