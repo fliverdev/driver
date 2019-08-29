@@ -1,8 +1,8 @@
+import 'package:driver/utils/ui_helpers.dart';
+import 'package:driver/widgets/sexy_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:driver/utils/ui_helpers.dart';
-import 'package:driver/widgets/sexy_tile.dart';
 
 class MyAboutPage extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
                     },
                   ),
                   Text(
-                    'About',
+                    'जानकारी',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.w600,
@@ -74,7 +74,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
                             right: 15.0,
                           ),
                           child: Text(
-                            'Fliver डेवलपर्स और डिजाइनरों'
+                            'फ़्लीवर डेवलपर्स और डिजाइनरों'
                             'की एक टीम द्वारा विकसित'
                             'एक ऐप है |',
                             style: TextStyle(
