@@ -191,6 +191,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         backgroundColor: invertColorsTheme(context),
         animatedIcon: AnimatedIcons.menu_close,
         elevation: 5.0,
+        marginRight: 290.0,
         children: [
           SpeedDialChild(
             child: Icon(Icons.location_on),
