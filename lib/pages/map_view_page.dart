@@ -1,20 +1,19 @@
 import 'dart:async';
-import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:driver/pages/about_page.dart';
+import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/map_style.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:driver/utils/colors.dart';
-import 'package:driver/utils/map_style.dart';
-import 'package:driver/pages/about_page.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:random_string/random_string.dart';
 import 'package:rxdart/rxdart.dart';
-
 
 class MyMapViewPage extends StatefulWidget {
   @override
@@ -54,16 +53,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Geolocator().getCurrentPosition().then((currLoc) {
       setState(() {
         currentLocation = currLoc;
-/*        _circle.add(Circle(
-          circleId: CircleId(
-              LatLng(currentLocation.latitude, currentLocation.longitude)
-                  .toString()),
-          center: LatLng(currentLocation.latitude, currentLocation.longitude),
-          radius: 75,
-          fillColor: MyColors.translucentColor,
-         strokeColor: MyColors.primaryColor,
-         visible: true,
-        ));*/
         _populateClients();
       });
     });
@@ -88,24 +77,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       markers[markerId] = marker;
     });
   } // creates markers from firestore on the map
-
-/*  void _addCurrentLocationMarker() {
-    var markerIdVal = Random().toString();
-    final MarkerId markerId = MarkerId(markerIdVal);
-
-    var marker = Marker(
-      markerId: markerId,
-      position: LatLng(currentLocation.latitude, currentLocation.longitude),
-      icon: BitmapDescriptor.defaultMarkerWithHue(147.5), // closest color i
-      // could get
-      infoWindow: InfoWindow(title: 'Marker Title', snippet: 'Marker Snippet'),
-      onTap: doNothing,
-    );
-
-    setState(() {
-      markers[markerId] = marker;
-    });
-  } //adds current location as a marker to map and db*/
 
   void _populateClients() {
     clients = [];
@@ -132,16 +103,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     );
   }
 
- /* Future<DocumentReference> _writeGeoPointToDb() async {
-    var pos = await LatLng(currentLocation.latitude, currentLocation.longitude);
-    GeoFirePoint point = geo.point(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude);
-    return firestore.collection('locations').add({
-      'position': point.data,
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +117,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
               compassEnabled: false,
               initialCameraPosition: CameraPosition(
                 target:
-                LatLng(currentLocation.latitude, currentLocation.longitude),
+                    LatLng(currentLocation.latitude, currentLocation.longitude),
                 zoom: 15.0,
               ),
               markers: Set<Marker>.of(markers.values),
@@ -168,7 +129,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Fliver चालक',
+                    'फ़्लीवर चालक',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24.0,
@@ -184,13 +145,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       ),
       floatingActionButton: SpeedDial(
         heroTag: 'fab',
-        tooltip: 'Actions menu',
         closeManually: false,
         foregroundColor: invertInvertColorsTheme(context),
         backgroundColor: invertColorsTheme(context),
         animatedIcon: AnimatedIcons.menu_close,
         elevation: 5.0,
-        marginRight: 290.0,
         children: [
           SpeedDialChild(
             child: Icon(Icons.location_on),
@@ -212,9 +171,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 color: MyColors.accentColor, fontWeight: FontWeight.w500),
             onTap: () {
               DynamicTheme.of(context).setBrightness(
-                  Theme
-                      .of(context)
-                      .brightness == Brightness.dark
+                  Theme.of(context).brightness == Brightness.dark
                       ? Brightness.light
                       : Brightness.dark);
               _onMapCreated(mapController); //buggy
