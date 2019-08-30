@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Fliver Driver',
           theme: theme,
           home: MyMapViewPage(),
