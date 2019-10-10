@@ -2,7 +2,6 @@ import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class MyAboutPage extends StatefulWidget {
   @override
@@ -47,7 +46,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
               ),
             ),
             Expanded(
-              child: StaggeredGridView.count(
+              child: GridView.count(
                 crossAxisCount: 1,
                 children: <Widget>[
                   sexyTile(
@@ -189,13 +188,6 @@ class _MyAboutPageState extends State<MyAboutPage> {
                     onTap: doNothing,
                   ),
                   SizedBox(), // just to add space at the end
-                ],
-                staggeredTiles: [
-                  StaggeredTile.extent(1, 275.0),
-                  StaggeredTile.extent(1, 200.0),
-                  StaggeredTile.extent(1, 200.0),
-                  StaggeredTile.extent(1, 200.0),
-                  StaggeredTile.extent(1, 50.0), // for the SizedBox
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:flutter/material.dart';
 import 'package:driver/pages/map_view_page.dart';
 import 'package:driver/utils/colors.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
         primaryColor: MyColors.primaryColor,
         accentColor: MyColors.accentColor,
         brightness: brightness,
-//        fontFamily: '',
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
