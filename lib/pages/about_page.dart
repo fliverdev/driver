@@ -1,7 +1,10 @@
+import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyAboutPage extends StatefulWidget {
   @override
@@ -9,8 +12,41 @@ class MyAboutPage extends StatefulWidget {
 }
 
 class _MyAboutPageState extends State<MyAboutPage> {
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      print('Launching $url...');
+      await launch(url);
+    } else {
+      print('Error launching $url!');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> contributorNames = [
+      'Urmil Shroff',
+      'Priyansh Ramnani',
+      'Vinay Kolwankar',
+    ];
+
+    List<String> contributorDesc = [
+      'I like developing apps.',
+      'I like to code.',
+      'I like designing UI.',
+    ];
+
+    List<String> contributorPhotos = [
+      'urmil.jpg',
+      'priyansh.jpg',
+      'vinay.png',
+    ];
+
+    List<String> profileUrls = [
+      'https://urmilshroff.tech',
+      'https://github.com/prince1998',
+      'http://www.decaf.co.in',
+    ];
+
     return Scaffold(
       backgroundColor: invertInvertColorsStrong(context),
       body: Container(
@@ -27,20 +63,17 @@ class _MyAboutPageState extends State<MyAboutPage> {
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios),
                     tooltip: 'Go back',
-                    iconSize: 24.0,
+                    iconSize: 20.0,
                     color: invertColorsStrong(context),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   Text(
-                    'जानकारी',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
-                      color: invertColorsStrong(context),
-                    ),
+                    'Credits',
+                    style: isThemeCurrentlyDark(context)
+                        ? MyTextStyles.titleStyleLight
+                        : MyTextStyles.titleStyleDark,
                   ),
                 ],
               ),
@@ -48,164 +81,72 @@ class _MyAboutPageState extends State<MyAboutPage> {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 1,
-                children: <Widget>[
-                  sexyTile(
-                    context,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 110.0,
-                          height: 110.0,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: isThemeCurrentlyDark(context)
-                                    ? AssetImage(
-                                        './assets/images/fliver-green.png')
-                                    : AssetImage(
-                                        './assets/images/fliver-black.png')),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 15.0,
-                            right: 15.0,
-                          ),
-                          child: Text(
-                            'फ़्लीवर डेवलपर्स और डिजाइनरों'
-                            'की एक टीम द्वारा विकसित'
-                            'एक ऐप है |',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w400,
-                              color: invertColorsStrong(context),
+                childAspectRatio: 2.2, // increase/decrease tile height
+                children: List.generate(
+                  contributorNames.length,
+                  (i) {
+                    return SexyTile(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 75.0,
+                            height: 75.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    './assets/credits/${contributorPhotos[i]}'),
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 15.0,
-                            right: 15.0,
+                          SizedBox(
+                            width: 15.0,
                           ),
-                          child: Text(
-                            'हम कंप्यूटर इंजीनियरिंग के छात्र हैं |',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.italic,
-                              color: invertColorsStrong(context),
-                            ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                '${contributorNames[i]}',
+                                style: isThemeCurrentlyDark(context)
+                                    ? MyTextStyles.titleStyleLight
+                                    : MyTextStyles.titleStyleDark,
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              Text(
+                                '${contributorDesc[i]}',
+                                style: isThemeCurrentlyDark(context)
+                                    ? MyTextStyles.bodyStyleLightItalic
+                                    : MyTextStyles.bodyStyleDarkItalic,
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
-                    ),
-                    onTap: doNothing,
-                  ),
-                  sexyTile(
-                    context,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 75.0,
-                          height: 75.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('./assets/images/urmil.png'),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Urmil Shroff',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: invertColorsStrong(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: doNothing,
-                  ),
-                  sexyTile(
-                    context,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 75.0,
-                          height: 75.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('./assets/images/priyansh.jpeg'),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Priyansh Ramnani',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: invertColorsStrong(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: doNothing,
-                  ),
-                  sexyTile(
-                    context,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 75.0,
-                          height: 75.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('./assets/images/vinay.png'),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Vinay Kolwankar',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: invertColorsStrong(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: doNothing,
-                  ),
-                  SizedBox(), // just to add space at the end
-                ],
+                        ],
+                      ),
+                      splashColor: MyColors.primaryColor,
+                      onTap: () => _launchURL(profileUrls[i]),
+                    );
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         heroTag: 'fab',
-        tooltip: 'View source code',
+        tooltip: 'Source code',
         foregroundColor: invertInvertColorsTheme(context),
         backgroundColor: invertColorsTheme(context),
         elevation: 5.0,
         child: Icon(
           Icons.code,
-//          size: 36.0,
         ),
-        onPressed: doNothing,
+        onPressed: () => _launchURL('https://github.com/fliverdev/driver'),
       ),
     );
   }

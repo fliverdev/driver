@@ -1,5 +1,5 @@
-import 'package:driver/pages/map_view_page.dart';
 import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/first_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -9,18 +9,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
-      defaultBrightness: Brightness.light,
+      defaultBrightness: Brightness.dark,
       data: (brightness) => ThemeData(
+        fontFamily: 'LexendDeca',
         primaryColor: MyColors.primaryColor,
         accentColor: MyColors.accentColor,
-        brightness: brightness,
+        brightness: brightness, // default is dark
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
           title: 'Fliver Driver',
           theme: theme,
-          home: MyMapViewPage(),
+          home: FirstPage(),
         );
       },
     );

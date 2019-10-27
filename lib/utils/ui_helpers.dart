@@ -1,6 +1,6 @@
+import 'package:driver/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:driver/utils/colors.dart';
 
 void doNothing() {
   print('Nothing is happening here (yet)');
