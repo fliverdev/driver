@@ -12,13 +12,20 @@ dependencies:
   cloud_firestore: ^0.12.9
   cupertino_icons: ^0.1.2
   dynamic_theme: ^1.0.0
+  flare_flutter: ^1.6.2
+  flutter_offline: ^0.2.4
   flutter_speed_dial: ^1.2.1
   geoflutterfire: ^2.0.3
-  geolocator: ^4.0.3
-  google_maps_flutter: ^0.5.20
+  geolocator: ^5.1.4+1
+  google_maps_flutter: ^0.5.21+7
+  liquid_swipe: ^1.2.0
   permission_handler: ^3.2.2
-  random_string: ^1.1.0
-  rxdart: ^0.22.1
+  shared_preferences: ^0.5.3+5
+  url_launcher: ^5.2.4
+
+  great_circle_distance:
+    git:
+      url: git://github.com/fliverdev/great_circle_distance.git
 
 dev_dependencies:
   flutter_test:
@@ -27,15 +34,23 @@ dev_dependencies:
 
 flutter_icons:
   android: 'launcher_icon'
-  image_path_android: 'assets/images/icon/icon-legacy.png'
-  adaptive_icon_foreground: 'assets/images/icon/icon-adaptive.png'
-  adaptive_icon_background: '#1de9b6'
+  image_path_android: 'assets/icon/icon-legacy.png'
+  adaptive_icon_foreground: 'assets/icon/icon-adaptive.png'
+  adaptive_icon_background: '#eceff1'
 
   ios: true
-  image_path_ios: 'assets/images/icon/icon-ios.png'
+  image_path_ios: 'assets/icon/icon-ios.png'
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+     - assets/credits/
+     - assets/flare/
+     - assets/logo/
+     - assets/other/
+
+  fonts:
+    - family: LexendDeca
+      fonts:
+        - asset: assets/fonts/LexendDeca/LexendDeca-Regular.ttf
