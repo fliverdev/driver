@@ -28,6 +28,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     position = _setCurrentLocation();
   } // gets current user location when the app launches
 
+  Future<Position> _setCurrentLocation() async {
+    currentLocation = await Geolocator().getCurrentPosition();
+    return currentLocation;
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
 
@@ -45,11 +50,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       print('$markerRefreshInterval seconds over, refreshing...');
 //      _fetchMarkersFromDb(); // updates markers every 10 seconds
     });
-  }
-
-  Future<Position> _setCurrentLocation() async {
-    currentLocation = await Geolocator().getCurrentPosition();
-    return currentLocation;
   }
 
   @override

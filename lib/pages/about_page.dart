@@ -62,7 +62,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios),
-                    tooltip: 'Go back',
+                    tooltip: 'वापस जाओ',
                     iconSize: 20.0,
                     color: invertColorsStrong(context),
                     onPressed: () {
@@ -70,7 +70,7 @@ class _MyAboutPageState extends State<MyAboutPage> {
                     },
                   ),
                   Text(
-                    'Credits',
+                    'क्रेडिट',
                     style: isThemeCurrentlyDark(context)
                         ? MyTextStyles.titleStyleLight
                         : MyTextStyles.titleStyleDark,
@@ -136,17 +136,6 @@ class _MyAboutPageState extends State<MyAboutPage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'fab',
-        tooltip: 'Source code',
-        foregroundColor: invertInvertColorsTheme(context),
-        backgroundColor: invertColorsTheme(context),
-        elevation: 5.0,
-        child: Icon(
-          Icons.code,
-        ),
-        onPressed: () => _launchURL('https://github.com/fliverdev/driver'),
       ),
     );
   }
