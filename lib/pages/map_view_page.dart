@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:driver/pages/about_page.dart';
-import 'package:driver/services/map.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_style.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
@@ -15,8 +15,13 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyMapViewPage extends StatefulWidget {
+  final SharedPreferences helper;
+  final String identity;
+  MyMapViewPage({Key key, @required this.helper, @required this.identity})
+      : super(key: key);
   @override
   _MyMapViewPageState createState() => _MyMapViewPageState();
 }
@@ -26,18 +31,14 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   void initState() {
     super.initState();
     position = _setCurrentLocation();
+    print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
-
-  Future<Position> _setCurrentLocation() async {
-    currentLocation = await Geolocator().getCurrentPosition();
-    return currentLocation;
-  }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
 
     if (isFirstLaunch) {
-//      _fetchMarkersFromDb();
+      _fetchMarkersFromDb();
       mapController
           .setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
       isFirstLaunch = false;
@@ -48,9 +49,38 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
     Timer.periodic(markerRefreshInterval, (Timer t) {
       print('$markerRefreshInterval seconds over, refreshing...');
-//      _fetchMarkersFromDb(); // updates markers every 10 seconds
+      _fetchMarkersFromDb(); // updates markers every 10 seconds
     });
   }
+
+  Future<Position> _setCurrentLocation() async {
+    currentLocation = await Geolocator().getCurrentPosition();
+    return currentLocation;
+  }
+
+  void _fetchMarkersFromDb() {
+    Firestore.instance.collection('markers').getDocuments().then((docs) {
+      var docLength = docs.documents.length;
+      var clients = List(docLength);
+      for (int i = 0; i < docLength; i++) {
+        clients[i] = docs.documents[i];
+      }
+//      _populateMarkers(clients);
+    });
+  } // fetches markers from firestore
+
+  void _animateToLocation(location, animation) async {
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(location.latitude, location.longitude),
+          zoom: zoom[animation],
+          bearing: bearing[animation],
+          tilt: tilt[animation],
+        ),
+      ),
+    );
+  } // dat cool animation tho
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +116,10 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                     children: <Widget>[
                       GoogleMap(
                         onMapCreated: _onMapCreated,
-                        mapToolbarEnabled: true,
                         myLocationEnabled: true,
                         myLocationButtonEnabled: false,
                         compassEnabled: false,
+                        mapToolbarEnabled: false,
                         initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation.latitude,
                               currentLocation.longitude),
@@ -139,13 +169,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       backgroundColor: invertInvertColorsTheme(context),
                       label: 'आपका स्थान',
                       labelStyle: MyTextStyles.labelStyle,
-                      onTap: () {
-                        if (locationAnimation == 0) {
-                          locationAnimation = 1;
-                        } else if (locationAnimation == 1) {
-                          locationAnimation = 0;
-                        }
-                        animateToCurrentLocation(locationAnimation);
+                      onTap: () async {
+                        currentLocation =
+                            await Geolocator().getCurrentPosition();
+                        locationAnimation == 0
+                            ? locationAnimation = 1
+                            : locationAnimation = 0;
+                        _animateToLocation(currentLocation, locationAnimation);
                       },
                     ),
                     SpeedDialChild(
@@ -168,11 +198,60 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       backgroundColor: invertInvertColorsTheme(context),
                       label: 'जानकारी',
                       labelStyle: MyTextStyles.labelStyle,
-                      onTap: () {
-                        Navigator.push(context,
-                            CupertinoPageRoute(builder: (context) {
-                          return MyAboutPage();
-                        }));
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        bool isTipShown3 =
+                            prefs.getBool('isTipShown3') ?? false;
+
+                        if (isTipShown3) {
+                          Navigator.push(context,
+                              CupertinoPageRoute(builder: (context) {
+                            return MyCreditsPage();
+                          }));
+                        } else {
+                          // display a tip only once
+                          prefs.setBool('isTipShown3', true);
+                          showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              title: Text(
+                                'Credits',
+                                style: isThemeCurrentlyDark(context)
+                                    ? MyTextStyles.titleStyleLight
+                                    : MyTextStyles.titleStyleDark,
+                              ),
+                              content: Text(
+                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
+                                '\n\nTap anyone\'s name to open up their profile!',
+                                style: isThemeCurrentlyDark(context)
+                                    ? MyTextStyles.bodyStyleLight
+                                    : MyTextStyles.bodyStyleDark,
+                              ),
+                              actions: <Widget>[
+                                RaisedButton(
+                                  child: Text('Okay'),
+                                  color: invertColorsTheme(context),
+                                  textColor: invertInvertColorsStrong(context),
+                                  elevation: 3.0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0))),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        CupertinoPageRoute(builder: (context) {
+                                      return MyCreditsPage();
+                                    }));
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],
