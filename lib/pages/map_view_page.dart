@@ -223,21 +223,23 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0))),
                               title: Text(
-                                'Credits',
+                                AppLocalizations.of(context)
+                                    .translate('titleCredits'),
                                 style: isThemeCurrentlyDark(context)
                                     ? MyTextStyles.titleStyleLight
                                     : MyTextStyles.titleStyleDark,
                               ),
                               content: Text(
-                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
-                                '\n\nTap anyone\'s name to open up their profile!',
+                                AppLocalizations.of(context)
+                                    .translate('creditsPopupBody'),
                                 style: isThemeCurrentlyDark(context)
                                     ? MyTextStyles.bodyStyleLight
                                     : MyTextStyles.bodyStyleDark,
                               ),
                               actions: <Widget>[
                                 RaisedButton(
-                                  child: Text('Okay'),
+                                  child: Text(AppLocalizations.of(context)
+                                      .translate('creditsPopupButton')),
                                   color: invertColorsTheme(context),
                                   textColor: invertInvertColorsStrong(context),
                                   elevation: 3.0,

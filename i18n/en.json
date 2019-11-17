@@ -1,13 +1,13 @@
 //speedDial
 {
-    "speedDial1": "Credits"
-}
-{
-    "speedDial2.1": "Dark mode",
-    "speedDial2.2": "Light mode"
-}
-{
     "speedDial1": "Recenter"
+}
+{
+  "speedDial2.1": "Light mode",
+    "speedDial2.2": "Dark mode"
+}
+{
+    "speedDial3": "Credits"
 }
 
 
@@ -38,4 +38,28 @@
 }
 {
     "creditsButton2": "Feedback"
+}
+
+
+
+//noConnection
+{
+    "titleNoConnection": "Oops...there\'s no Internet!"
+}
+
+
+
+//fetchingLocation
+{
+    "titleFetchingLocation": "Fetching location..."
+}
+
+
+
+// creditsPopup
+{
+    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone\'s name to open up their profile!"
+}
+{
+    "creditsPopupButton": "Okay"
 }

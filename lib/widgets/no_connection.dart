@@ -1,4 +1,5 @@
 import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class NoConnection extends StatelessWidget {
                   height: 30.0,
                 ),
                 Text(
-                  'Oops...there\'s no Internet!',
+                  AppLocalizations.of(context).translate('titleNoConnection'),
                   style: MyTextStyles.titleStyleDark,
                 ),
               ],

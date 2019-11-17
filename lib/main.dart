@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-          ],
+          ], // causes the function to crash
           title: 'Fliver Driver',
           theme: theme,
           home: FirstPage(),

@@ -1,13 +1,13 @@
 //speedDial
 {
-    "speedDial1": "क्रेडिट"
-}
-{
-    "speedDial2.1": "डार्क मोड",
-    "speedDial2.2": "लाइट मोड"
-}
-{
     "speedDial1": "रेसेण्टर"
+}
+{
+  "speedDial2.1": "लाइट मोड",
+    "speedDial2.2": "डार्क मोड",
+}
+{
+    "speedDial3": "क्रेडिट"
 }
 
 
@@ -38,4 +38,28 @@
 }
 {
     "creditsButton2": "फीडबैक"
+}
+
+
+
+//noConnection
+{
+    "titleNoConnection": "Oops...there\'s no Internet!"
+}
+
+
+
+//fetchingLocation
+{
+    "titleFetchingLocation": "Fetching location..."
+}
+
+
+
+// creditsPopup
+{
+    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone\'s name to open up their profile!"
+}
+{
+    "creditsPopupButton": "Okay"
 }

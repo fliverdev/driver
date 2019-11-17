@@ -1,3 +1,4 @@
+import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -29,7 +30,8 @@ class FetchingLocation extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Fetching location...',
+                  AppLocalizations.of(context)
+                      .translate('titleFetchingLocation'),
                   style: isThemeCurrentlyDark(context)
                       ? MyTextStyles.titleStyleLight
                       : MyTextStyles.titleStyleDark,
