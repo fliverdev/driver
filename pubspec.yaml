@@ -9,6 +9,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   cloud_firestore: ^0.12.9
   cupertino_icons: ^0.1.2
   dynamic_theme: ^1.0.0
@@ -18,7 +21,7 @@ dependencies:
   geoflutterfire: ^2.0.3
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21
-  intl: ^0.16.0
+  intl: ^0.15.8
   liquid_swipe: '1.2.0'
   permission_handler: ^3.2.2
   share: ^0.6.3
