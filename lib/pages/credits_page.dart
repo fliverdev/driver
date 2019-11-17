@@ -1,4 +1,5 @@
 import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
@@ -46,7 +47,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                     },
                   ),
                   Text(
-                    'Credits',
+                    AppLocalizations.of(context).translate('titleCredits'),
                     style: isThemeCurrentlyDark(context)
                         ? MyTextStyles.titleStyleLight
                         : MyTextStyles.titleStyleDark,
@@ -82,7 +83,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Urmil Shroff',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContatinerName1'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.titleStyleLight
                                   : MyTextStyles.titleStyleDark,
@@ -91,7 +93,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'I like developing apps.',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContainerBody1'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.bodyStyleLightItalic
                                   : MyTextStyles.bodyStyleDarkItalic,
@@ -127,7 +130,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Priyansh Ramnani',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContatinerName2'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.titleStyleLight
                                   : MyTextStyles.titleStyleDark,
@@ -136,7 +140,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'I like to code.',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContainerBody2'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.bodyStyleLightItalic
                                   : MyTextStyles.bodyStyleDarkItalic,
@@ -171,7 +176,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Vinay Kolwankar',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContatinerName3'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.titleStyleLight
                                   : MyTextStyles.titleStyleDark,
@@ -180,7 +186,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'I like designing UI.',
+                              AppLocalizations.of(context)
+                                  .translate('creditsContainerBody3'),
                               style: isThemeCurrentlyDark(context)
                                   ? MyTextStyles.bodyStyleLightItalic
                                   : MyTextStyles.bodyStyleDarkItalic,
@@ -198,9 +205,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Built using Flutter 📲'
-                          '\nCompletely free & Open Source'
-                          '\nMade with ❤️ in Mumbai, India',
+                          AppLocalizations.of(context)
+                              .translate('creditsFooter'),
                           style: isThemeCurrentlyDark(context)
                               ? MyTextStyles.bodyStyleLight
                               : MyTextStyles.bodyStyleDark,
@@ -211,7 +217,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             FlatButton(
-                              child: Text('GitHub'),
+                              child: Text(AppLocalizations.of(context)
+                                  .translate('creditsButton1')),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -220,7 +227,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                                   'https://github.com/fliverdev/driver'),
                             ),
                             FlatButton(
-                              child: Text('Feedback'),
+                              child: Text(AppLocalizations.of(context)
+                                  .translate('creditsButton2')),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:

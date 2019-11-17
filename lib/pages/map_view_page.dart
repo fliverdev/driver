@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
+import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/map_style.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
@@ -87,8 +88,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
-    String toggleLightsText =
-        isThemeCurrentlyDark(context) ? 'प्रकाश मोड' : 'डार्क मोड';
+    String toggleLightsText = isThemeCurrentlyDark(context)
+        ? AppLocalizations.of(context).translate('speedDial2.1')
+        : AppLocalizations.of(context).translate('speedDial2.2');
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -167,7 +169,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: 'आपका स्थान',
+                      label:
+                          AppLocalizations.of(context).translate('speedDial1'),
                       labelStyle: MyTextStyles.labelStyle,
                       onTap: () async {
                         currentLocation =
@@ -196,7 +199,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: 'जानकारी',
+                      label:
+                          AppLocalizations.of(context).translate('speedDial3'),
                       labelStyle: MyTextStyles.labelStyle,
                       onTap: () async {
                         SharedPreferences prefs =
