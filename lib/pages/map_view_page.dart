@@ -6,7 +6,6 @@ import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
-import 'package:driver/utils/variables.dart';
 import 'package:driver/widgets/fetching_location.dart';
 import 'package:driver/widgets/no_connection.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -28,6 +27,34 @@ class MyMapViewPage extends StatefulWidget {
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
+  var currentLocation;
+  var markerColor;
+  var locationAnimation = 0; // used to switch between 2 kinds of animations
+  var previousMarkersWithinRadius = 0;
+  var currentMarkersWithinRadius = 0;
+  var allMarkersWithinRadius = [];
+
+  final zoom = [15.0, 17.5]; // zoom levels (0/1)
+  final bearing = [0.0, 90.0]; // bearing level (0/1)
+  final tilt = [0.0, 45.0]; // axis tilt (0/1)
+
+  final displayMarkersRadius = 10000.0; // radius up to which markers are loaded
+
+  final markerRefreshInterval =
+      Duration(seconds: 5); // timeout to repopulate markers
+  final markerExpireInterval =
+      Duration(minutes: 15); // timeout to delete old markers
+
+  bool isFirstLaunch = true; // for dark mode fix
+  bool isMarkerDeleted = false; // to check if marker was deleted
+  bool isMarkerWithinRadius = false; // to identify nearby markers
+
+  GoogleMapController mapController;
+  Future<Position> position;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>(); // for snackbar
+
   @override
   void initState() {
     super.initState();
@@ -130,7 +157,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                           tilt: tilt[0],
                         ),
                         markers: Set<Marker>.of(markers.values),
-                        circles: hotspots,
                       ),
                       Positioned(
                         top: 10.0,
@@ -266,11 +292,5 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
             }
           });
     });
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
   }
 }
