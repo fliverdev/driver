@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:rxdart/rxdart.dart';
 
 var currentLocation;
 var locationAnimation = 0; // used to switch between two kinds of animations
@@ -32,5 +31,4 @@ String permissionStatusMessage = '';
 
 GoogleMapController mapController;
 StreamSubscription subscription;
-BehaviorSubject<double> circleRadius = BehaviorSubject.seeded(100.0);
 Future<Position> position;

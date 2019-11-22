@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/locale.dart';
-import 'package:driver/utils/map_style.dart';
+import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/utils/variables.dart';
