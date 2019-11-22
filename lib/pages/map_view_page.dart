@@ -57,12 +57,14 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   @override
   void initState() {
+    print('initState() called');
     super.initState();
     position = _setCurrentLocation();
     print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
 
   void _onMapCreated(GoogleMapController controller) {
+    print('_onMapCreated() called');
     mapController = controller;
 
     if (isFirstLaunch) {
@@ -82,11 +84,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   }
 
   Future<Position> _setCurrentLocation() async {
+    print('_setCurrentLocation() called');
     currentLocation = await Geolocator().getCurrentPosition();
     return currentLocation;
   }
 
   void _fetchMarkersFromDb() {
+    print('_fetchMarkersFromDb() called');
     Firestore.instance.collection('markers').getDocuments().then((docs) {
       var docLength = docs.documents.length;
       var clients = List(docLength);
@@ -97,7 +101,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     });
   } // fetches markers from firestore
 
-  void _animateToLocation(location, animation) async {
+  void _animateToLocation(location, animation) {
+    print('_animateToLocation called');
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -112,6 +117,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('Widget build() called');
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
