@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
-import 'package:driver/utils/map_style.dart';
+import 'package:driver/utils/locale.dart';
+import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
-import 'package:driver/utils/variables.dart';
 import 'package:driver/widgets/fetching_location.dart';
 import 'package:driver/widgets/no_connection.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -27,14 +27,44 @@ class MyMapViewPage extends StatefulWidget {
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
+  var currentLocation;
+  var markerColor;
+  var locationAnimation = 0; // used to switch between 2 kinds of animations
+  var previousMarkersWithinRadius = 0;
+  var currentMarkersWithinRadius = 0;
+  var allMarkersWithinRadius = [];
+
+  final zoom = [15.0, 17.5]; // zoom levels (0/1)
+  final bearing = [0.0, 90.0]; // bearing level (0/1)
+  final tilt = [0.0, 45.0]; // axis tilt (0/1)
+
+  final displayMarkersRadius = 10000.0; // radius up to which markers are loaded
+
+  final markerRefreshInterval =
+      Duration(seconds: 5); // timeout to repopulate markers
+  final markerExpireInterval =
+      Duration(minutes: 15); // timeout to delete old markers
+
+  bool isFirstLaunch = true; // for dark mode fix
+  bool isMarkerDeleted = false; // to check if marker was deleted
+  bool isMarkerWithinRadius = false; // to identify nearby markers
+
+  GoogleMapController mapController;
+  Future<Position> position;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>(); // for snackbar
+
   @override
   void initState() {
+    print('initState() called');
     super.initState();
     position = _setCurrentLocation();
     print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
 
   void _onMapCreated(GoogleMapController controller) {
+    print('_onMapCreated() called');
     mapController = controller;
 
     if (isFirstLaunch) {
@@ -54,11 +84,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   }
 
   Future<Position> _setCurrentLocation() async {
+    print('_setCurrentLocation() called');
     currentLocation = await Geolocator().getCurrentPosition();
     return currentLocation;
   }
 
   void _fetchMarkersFromDb() {
+    print('_fetchMarkersFromDb() called');
     Firestore.instance.collection('markers').getDocuments().then((docs) {
       var docLength = docs.documents.length;
       var clients = List(docLength);
@@ -69,7 +101,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     });
   } // fetches markers from firestore
 
-  void _animateToLocation(location, animation) async {
+  void _animateToLocation(location, animation) {
+    print('_animateToLocation called');
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -84,11 +117,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('Widget build() called');
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
-    String toggleLightsText =
-        isThemeCurrentlyDark(context) ? 'प्रकाश मोड' : 'डार्क मोड';
+    String toggleLightsText = isThemeCurrentlyDark(context)
+        ? AppLocalizations.of(context).translate('speedDial2.1')
+        : AppLocalizations.of(context).translate('speedDial2.2');
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -128,24 +163,23 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                           tilt: tilt[0],
                         ),
                         markers: Set<Marker>.of(markers.values),
-                        circles: hotspots,
                       ),
                       Positioned(
-                        top: 10.0,
+                        top: 45.0,
                         left: 20.0,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              width: 90.0,
-                              height: 90.0,
+                              width: 95.0,
+                              height: 30.0,
                               child: isThemeCurrentlyDark(context)
                                   ? Image.asset(
-                                      'assets/logo/fliver-green.png',
+                                      'assets/logo/text-green.png',
                                       fit: BoxFit.cover,
                                     )
                                   : Image.asset(
-                                      'assets/logo/fliver-black.png',
+                                      'assets/logo/text-black.png',
                                       fit: BoxFit.cover,
                                     ),
                             ),
@@ -167,7 +201,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: 'आपका स्थान',
+                      label:
+                          AppLocalizations.of(context).translate('speedDial1'),
                       labelStyle: MyTextStyles.labelStyle,
                       onTap: () async {
                         currentLocation =
@@ -196,7 +231,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: 'जानकारी',
+                      label:
+                          AppLocalizations.of(context).translate('speedDial3'),
                       labelStyle: MyTextStyles.labelStyle,
                       onTap: () async {
                         SharedPreferences prefs =
@@ -219,21 +255,23 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0))),
                               title: Text(
-                                'Credits',
+                                AppLocalizations.of(context)
+                                    .translate('titleCredits'),
                                 style: isThemeCurrentlyDark(context)
                                     ? MyTextStyles.titleStyleLight
                                     : MyTextStyles.titleStyleDark,
                               ),
                               content: Text(
-                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
-                                '\n\nTap anyone\'s name to open up their profile!',
+                                AppLocalizations.of(context)
+                                    .translate('creditsPopupBody'),
                                 style: isThemeCurrentlyDark(context)
                                     ? MyTextStyles.bodyStyleLight
                                     : MyTextStyles.bodyStyleDark,
                               ),
                               actions: <Widget>[
                                 RaisedButton(
-                                  child: Text('Okay'),
+                                  child: Text(AppLocalizations.of(context)
+                                      .translate('creditsPopupButton')),
                                   color: invertColorsTheme(context),
                                   textColor: invertInvertColorsStrong(context),
                                   elevation: 3.0,
@@ -260,11 +298,5 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
             }
           });
     });
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
   }
 }
