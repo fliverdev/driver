@@ -203,7 +203,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       backgroundColor: invertInvertColorsTheme(context),
                       label:
                           AppLocalizations.of(context).translate('speedDial1'),
-                      labelStyle: MyTextStyles.labelStyle,
+                      labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
                             await Geolocator().getCurrentPosition();
@@ -218,7 +218,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
                       label: toggleLightsText,
-                      labelStyle: MyTextStyles.labelStyle,
+                      labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
                             Theme.of(context).brightness == Brightness.dark
@@ -233,7 +233,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       backgroundColor: invertInvertColorsTheme(context),
                       label:
                           AppLocalizations.of(context).translate('speedDial3'),
-                      labelStyle: MyTextStyles.labelStyle,
+                      labelStyle: LabelStyles.black,
                       onTap: () async {
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
@@ -258,15 +258,15 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                 AppLocalizations.of(context)
                                     .translate('titleCredits'),
                                 style: isThemeCurrentlyDark(context)
-                                    ? MyTextStyles.titleStyleLight
-                                    : MyTextStyles.titleStyleDark,
+                                    ? TitleStyles.white
+                                    : TitleStyles.black,
                               ),
                               content: Text(
                                 AppLocalizations.of(context)
                                     .translate('creditsPopupBody'),
                                 style: isThemeCurrentlyDark(context)
-                                    ? MyTextStyles.bodyStyleLight
-                                    : MyTextStyles.bodyStyleDark,
+                                    ? BodyStyles.white
+                                    : BodyStyles.black,
                               ),
                               actions: <Widget>[
                                 RaisedButton(

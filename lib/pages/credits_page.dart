@@ -49,8 +49,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                   Text(
                     AppLocalizations.of(context).translate('titleCredits'),
                     style: isThemeCurrentlyDark(context)
-                        ? MyTextStyles.titleStyleLight
-                        : MyTextStyles.titleStyleDark,
+                        ? TitleStyles.white
+                        : TitleStyles.black,
                   ),
                 ],
               ),
@@ -86,8 +86,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContatinerName1'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
@@ -96,14 +96,14 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContainerBody1'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('https://urmilshroff.tech'),
                   ),
                   SexyTile(
@@ -133,8 +133,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContatinerName2'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
@@ -143,14 +143,14 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContainerBody2'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('https://github.com/prince1998'),
                   ),
                   SexyTile(
@@ -179,8 +179,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContatinerName3'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
@@ -189,14 +189,14 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               AppLocalizations.of(context)
                                   .translate('creditsContainerBody3'),
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('http://www.decaf.co.in'),
                   ),
                   Container(
@@ -208,8 +208,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           AppLocalizations.of(context)
                               .translate('creditsFooter'),
                           style: isThemeCurrentlyDark(context)
-                              ? MyTextStyles.bodyStyleLight
-                              : MyTextStyles.bodyStyleDark,
+                              ? BodyStyles.white
+                              : BodyStyles.black,
                           textAlign: TextAlign.center,
                         ),
                         Row(
