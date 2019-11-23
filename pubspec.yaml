@@ -48,6 +48,9 @@ flutter:
      - assets/flare/
      - assets/logo/
      - assets/other/
+     - i18n/en.json
+     - i18n/hi.json
+     - i18n/mr.json
 
   fonts:
     - family: AvenirNextRounded
