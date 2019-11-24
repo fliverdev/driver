@@ -208,8 +208,8 @@ SPEC CHECKSUMS:
   FirebaseFirestore: d65bd28e77a8cdc045be6353c6e1e146efdf92dc
   FirebaseInstanceID: 8b42755db950682e7de0d167bc6fb26a57b244af
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  geoflutterfire: 3ac365ececef64aa3d692ceda419589f92f732a6
-  geolocator: 42437f4ba1897906a040c826678815c059b22c80
+  geoflutterfire: 2a6493e01fb6eef1a6c9046b1baf9a943d0c5ffe
+  geolocator: 857074f794a14d158fc01b2b68caae9cb7beb72d
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
   google_maps_flutter: 78a52114c898b42ea647919679a4c58b70abe876
   GoogleAppMeasurement: 47285fa897e5a125df56b9ef8750a1d81e4598a8
@@ -229,4 +229,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 001830f897fe2dc2b8a50942681e0382c270fff0
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.2

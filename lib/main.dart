@@ -1,7 +1,7 @@
+import 'package:driver/utils/colors.dart';
+import 'package:driver/utils/first_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:driver/pages/map_view_page.dart';
-import 'package:driver/utils/colors.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,19 +9,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
-      defaultBrightness: Brightness.light,
+      defaultBrightness: Brightness.dark,
       data: (brightness) => ThemeData(
-        primaryColor: MyColors.primaryColor,
-        accentColor: MyColors.accentColor,
-        brightness: brightness,
-//        fontFamily: '',
+        fontFamily: 'AvenirNextRounded',
+        primaryColor: MyColors.primary,
+        accentColor: MyColors.accent,
+        brightness: brightness, // default is dark
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
+//      supportedLocales: [
+//        Locale('en', 'US'), // English
+//        Locale('hi', ''), // Hindi
+//        Locale('mr', ''), // Marathi
+//      ],
+//      localizationsDelegates: [
+//        AppLocalizations.delegate,
+//        GlobalMaterialLocalizations.delegate,
+//        GlobalWidgetsLocalizations.delegate,
+//      ], // causes the function to crash
           title: 'Fliver Driver',
-          theme: theme,
-          home: MyMapViewPage(),
+//      theme: theme,
+          home: FirstPage(),
         );
       },
     );

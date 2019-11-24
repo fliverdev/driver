@@ -1,10 +1,18 @@
+import 'package:driver/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:driver/utils/colors.dart';
 
 void doNothing() {
   print('Nothing is happening here (yet)');
 } //better than doing null-ing, right? ;)
+
+bool isIOS(BuildContext context) {
+  if (Theme.of(context).platform == TargetPlatform.iOS) {
+    return true;
+  } else {
+    return false;
+  }
+} // check if android or ios
 
 bool isThemeCurrentlyDark(BuildContext context) {
   if (Theme.of(context).brightness == Brightness.dark) {
@@ -16,17 +24,17 @@ bool isThemeCurrentlyDark(BuildContext context) {
 
 Color invertColorsTheme(BuildContext context) {
   if (isThemeCurrentlyDark(context)) {
-    return MyColors.primaryColor;
+    return MyColors.primary;
   } else {
-    return MyColors.accentColor;
+    return MyColors.accent;
   }
 } //returns appropriate theme colors for ui elements
 
 Color invertInvertColorsTheme(BuildContext context) {
   if (isThemeCurrentlyDark(context)) {
-    return MyColors.accentColor;
+    return MyColors.accent;
   } else {
-    return MyColors.primaryColor;
+    return MyColors.primary;
   }
 } //keeps the same colors lol
 

@@ -1,0 +1,65 @@
+//speedDial
+{
+    "speedDial1": "रेसेण्टर"
+}
+{
+  "speedDial2.1": "लाइट मोड",
+    "speedDial2.2": "डार्क मोड",
+}
+{
+    "speedDial3": "क्रेडिट"
+}
+
+
+
+//credits
+{
+    "titleCredits": "क्रेडिट"
+}
+{
+    "creditsContatinerName1": "उर्मिल श्रॉफ",
+    "creditsContainerBody1": "मुझे ऐप्स को कोड करना पसंद है।"
+}
+{
+    "creditsContatinerName2": "प्रियांश रामनानी",
+    "creditsContainerBody2": "मुझे कोड पसंद है।"
+}
+{
+    "creditsContatinerName3": "विनय कोलवनकर",
+    "creditsContainerBody3": "मुझे यूआई डिजाइन करना पसंद है।"
+}
+{
+    "creditsFooter": "फ्लटर का उपयोग कर बनाया गया 📲
+    \nपूरी तरह से मुक्त और ओपन सोर्स
+    \nमुंबई, भारत में ❤️के साथ बनाया गया"
+}
+{
+    "creditsButton1": "गिटहब"
+}
+{
+    "creditsButton2": "फीडबैक"
+}
+
+
+
+//noConnection
+{
+    "titleNoConnection": "Oops...there\'s no Internet!"
+}
+
+
+
+//fetchingLocation
+{
+    "titleFetchingLocation": "Fetching location..."
+}
+
+
+
+// creditsPopup
+{
+    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone\'s name to open up their profile!"
+}
+{
+    "creditsPopupButton": "Okay"
+}
