@@ -1,65 +1,59 @@
-//speedDial
+
 {
-    "speedDial1": "रेसेण्टर"
-}
-{
+    "speedDial1": "रेसेण्टर",
+
+
   "speedDial2.1": "लाइट मोड",
     "speedDial2.2": "डार्क मोड",
-}
-{
-    "speedDial3": "क्रेडिट"
-}
+
+
+    "speedDial3": "क्रेडिट",
 
 
 
-//credits
-{
-    "titleCredits": "क्रेडिट"
-}
-{
-    "creditsContatinerName1": "उर्मिल श्रॉफ",
-    "creditsContainerBody1": "मला अ‍ॅप्स कोड करायला आवडतात."
-}
-{
-    "creditsContatinerName2": "प्रियांश रामनानी",
-    "creditsContainerBody2": "मला कोड करायला आवडतो"
-}
-{
-    "creditsContatinerName3": "विनय कोलवनकर",
-    "creditsContainerBody3": "मला यूआय डिझाइन करायला आवडते"
-}
-{
-    "creditsFooter": "फ्लटरच्या पासून बनवले 📲
-    \nपूर्णपणे मुक्त आणि ओपन सोर्स
-    \nमुंबई, भारत मध्ये ❤️बनविलेले"
-}
-{
-    "creditsButton1": "गिटहब"
-}
-{
-    "creditsButton2": "फीडबैक"
-}
 
 
 
-//noConnection
-{
-    "titleNoConnection": "Oops...there\'s no Internet!"
-}
+    "titleCredits": "क्रेडिट",
+
+
+    "creditsContainerName1": "उर्मिल श्रॉफ",
+    "creditsContainerBody1": "मला अ‍ॅप्स कोड करायला आवडतात.",
+
+
+    "creditsContainerName2": "प्रियांश रामनानी",
+    "creditsContainerBody2": "मला कोड करायला आवडतो",
+
+
+    "creditsContainerName3": "विनय कोलवनकर",
+    "creditsContainerBody3": "मला यूआय डिझाइन करायला आवडते",
+
+
+    "creditsFooter": "फ्लटरच्या पासून बनवले 📲 \nपूर्णपणे मुक्त आणि ओपन सोर्स \nमुंबई, भारत मध्ये ❤️बनविलेले",
+
+
+    "creditsButton1": "गिटहब",
+
+
+    "creditsButton2": "फीडबैक",
 
 
 
-//fetchingLocation
-{
-    "titleFetchingLocation": "Fetching location..."
-}
+    "titleNoConnection": "Oops...there's no Internet!",
 
 
 
-// creditsPopup
-{
-    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone\'s name to open up their profile!"
-}
-{
+
+
+
+    "titleFetchingLocation": "Fetching location...",
+
+
+
+
+
+    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone's name to open up their profile!",
+
+
     "creditsPopupButton": "Okay"
 }

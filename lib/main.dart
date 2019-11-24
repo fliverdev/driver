@@ -2,6 +2,9 @@ import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:driver/utils/locale.dart';
+import 'package:driver/pages/map_view_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,16 +21,16 @@ class MyApp extends StatelessWidget {
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
-//      supportedLocales: [
-//        Locale('en', 'US'), // English
-//        Locale('hi', ''), // Hindi
-//        Locale('mr', ''), // Marathi
-//      ],
-//      localizationsDelegates: [
-//        AppLocalizations.delegate,
-//        GlobalMaterialLocalizations.delegate,
-//        GlobalWidgetsLocalizations.delegate,
-//      ], // causes the function to crash
+      supportedLocales: [
+        Locale('EN', 'US'), // English
+        Locale('hi', ''), // Hindi
+        Locale('mr', ''), // Marathi
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ], // causes the function to crash
           title: 'Fliver Driver',
 //      theme: theme,
           home: FirstPage(),

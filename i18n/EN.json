@@ -1,0 +1,59 @@
+
+{
+    "speedDial1": "Recenter",
+
+    "speedDial2.1": "Light mode",
+    "speedDial2.2": "Dark mode",
+
+    "speedDial3": "Credits",
+
+
+
+
+
+
+    "titleCredits": "Credits",
+
+
+    "creditsContainerName1": "Urmil Shroff",
+    "creditsContainerBody1": "I like developing apps.",
+
+
+    "creditsContainerName2": "Priyansh Ramnani",
+    "creditsContainerBody2": "I like to code.",
+
+
+    "creditsContainerName3": "Vinay Kolwankar",
+    "creditsContainerBody3": "I like designing UI.",
+
+
+    "creditsFooter": "Built using Flutter 📲\nCompletely free & Open Source \n Made with ❤ in Mumbai,India",
+
+
+    "creditsButton1": "GitHub",
+
+
+    "creditsButton2": "Feedback",
+
+
+
+
+
+
+    "titleNoConnection": "Oops...there\'s no Internet!",
+
+
+
+
+
+    "titleFetchingLocation": "Fetching location...",
+
+
+
+
+
+
+    "creditsPopupBody": "Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.\n\nTap anyone's name to open up their profile!",
+
+    "creditsPopupButton": "Okay"
+}
