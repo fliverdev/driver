@@ -121,9 +121,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
-    String toggleLightsText = isThemeCurrentlyDark(context)
-        ? AppLocalizations.of(context).translate('speedDial2.1')
-        : AppLocalizations.of(context).translate('speedDial2.2');
+//    String toggleLightsText = isThemeCurrentlyDark(context)
+//        ? AppLocalizations.of(context).translate('speedDial2.1')
+//        : AppLocalizations.of(context).translate('speedDial2.2');
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -201,8 +201,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label:
-                          AppLocalizations.of(context).translate('speedDial1'),
+//                      label:
+//                          AppLocalizations.of(context).translate('speedDial1'),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
@@ -217,7 +217,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: toggleLightsIcon,
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: toggleLightsText,
+//                      label: toggleLightsText,
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
@@ -231,8 +231,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label:
-                          AppLocalizations.of(context).translate('speedDial3'),
+//                      label:
+//                          AppLocalizations.of(context).translate('speedDial3'),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         SharedPreferences prefs =
@@ -248,47 +248,47 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         } else {
                           // display a tip only once
                           prefs.setBool('isTipShown3', true);
-                          showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              title: Text(
-                                AppLocalizations.of(context)
-                                    .translate('titleCredits'),
-                                style: isThemeCurrentlyDark(context)
-                                    ? TitleStyles.white
-                                    : TitleStyles.black,
-                              ),
-                              content: Text(
-                                AppLocalizations.of(context)
-                                    .translate('creditsPopupBody'),
-                                style: isThemeCurrentlyDark(context)
-                                    ? BodyStyles.white
-                                    : BodyStyles.black,
-                              ),
-                              actions: <Widget>[
-                                RaisedButton(
-                                  child: Text(AppLocalizations.of(context)
-                                      .translate('creditsPopupButton')),
-                                  color: invertColorsTheme(context),
-                                  textColor: invertInvertColorsStrong(context),
-                                  elevation: 3.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0))),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.push(context,
-                                        CupertinoPageRoute(builder: (context) {
-                                      return MyCreditsPage();
-                                    }));
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+//                          showDialog(
+//                            context: context,
+//                            child: AlertDialog(
+//                              shape: RoundedRectangleBorder(
+//                                  borderRadius:
+//                                      BorderRadius.all(Radius.circular(10.0))),
+//                              title: Text(
+//                                AppLocalizations.of(context)
+//                                    .translate('titleCredits'),
+//                                style: isThemeCurrentlyDark(context)
+//                                    ? TitleStyles.white
+//                                    : TitleStyles.black,
+//                              ),
+//                              content: Text(
+//                                AppLocalizations.of(context)
+//                                    .translate('creditsPopupBody'),
+//                                style: isThemeCurrentlyDark(context)
+//                                    ? BodyStyles.white
+//                                    : BodyStyles.black,
+//                              ),
+//                              actions: <Widget>[
+//                                RaisedButton(
+//                                  child: Text(AppLocalizations.of(context)
+//                                      .translate('creditsPopupButton')),
+//                                  color: invertColorsTheme(context),
+//                                  textColor: invertInvertColorsStrong(context),
+//                                  elevation: 3.0,
+//                                  shape: RoundedRectangleBorder(
+//                                      borderRadius: BorderRadius.all(
+//                                          Radius.circular(5.0))),
+//                                  onPressed: () {
+//                                    Navigator.pop(context);
+//                                    Navigator.push(context,
+//                                        CupertinoPageRoute(builder: (context) {
+//                                      return MyCreditsPage();
+//                                    }));
+//                                  },
+//                                ),
+//                              ],
+//                            ),
+//                          );
                         }
                       },
                     ),
