@@ -11,6 +11,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  flutter_cupertino_localizations: ^1.0.1
 
   cloud_firestore: ^0.12.9
   cupertino_icons: ^0.1.2
@@ -22,6 +23,7 @@ dependencies:
   google_maps_flutter: ^0.5.21
   intl: ^0.15.8
   share: ^0.6.3
+  provider: ^3.1.0
   shared_preferences: ^0.5.3
   url_launcher: ^5.2.4
   uuid: ^2.0.4
@@ -48,7 +50,7 @@ flutter:
      - assets/flare/
      - assets/logo/
      - assets/other/
-     - i18n/EN.json
+     - i18n/en.json
      - i18n/hi.json
      - i18n/mr.json
 

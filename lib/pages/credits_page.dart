@@ -48,7 +48,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                   ),
                   Text(
                     AppLocalizations.of(context).translate('titleCredits'),
-                    style: isThemeCurrentlyDark(context)
+                  style: isThemeCurrentlyDark(context)
                         ? TitleStyles.white
                         : TitleStyles.black,
                   ),
