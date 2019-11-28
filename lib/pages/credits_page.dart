@@ -1,5 +1,4 @@
 import 'package:driver/utils/colors.dart';
-import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
@@ -47,10 +46,10 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                     },
                   ),
                   Text(
-                    AppLocalizations.of(context).translate('titleCredits'),
+                    'titleCredits',
                     style: isThemeCurrentlyDark(context)
-                        ? MyTextStyles.titleStyleLight
-                        : MyTextStyles.titleStyleDark,
+                        ? TitleStyles.white
+                        : TitleStyles.black,
                   ),
                 ],
               ),
@@ -83,27 +82,25 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContatinerName1'),
+                              'creditsContatinerName1',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContainerBody1'),
+                              'creditsContainerBody1',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('https://urmilshroff.tech'),
                   ),
                   SexyTile(
@@ -130,27 +127,25 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContatinerName2'),
+                              'creditsContatinerName2',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContainerBody2'),
+                              'creditsContainerBody2',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('https://github.com/prince1998'),
                   ),
                   SexyTile(
@@ -176,27 +171,25 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContatinerName3'),
+                              'creditsContatinerName3',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.titleStyleLight
-                                  : MyTextStyles.titleStyleDark,
+                                  ? TitleStyles.white
+                                  : TitleStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('creditsContainerBody3'),
+                              'creditsContainerBody3',
                               style: isThemeCurrentlyDark(context)
-                                  ? MyTextStyles.bodyStyleLightItalic
-                                  : MyTextStyles.bodyStyleDarkItalic,
+                                  ? BodyStylesItalic.white
+                                  : BodyStylesItalic.black,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    splashColor: MyColors.primaryColor,
+                    splashColor: MyColors.primary,
                     onTap: () => _launchURL('http://www.decaf.co.in'),
                   ),
                   Container(
@@ -205,11 +198,10 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          AppLocalizations.of(context)
-                              .translate('creditsFooter'),
+                          'creditsFooter',
                           style: isThemeCurrentlyDark(context)
-                              ? MyTextStyles.bodyStyleLight
-                              : MyTextStyles.bodyStyleDark,
+                              ? BodyStyles.white
+                              : BodyStyles.black,
                           textAlign: TextAlign.center,
                         ),
                         Row(
@@ -217,8 +209,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             FlatButton(
-                              child: Text(AppLocalizations.of(context)
-                                  .translate('creditsButton1')),
+                              child: Text('creditsButton1'),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -227,8 +218,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                                   'https://github.com/fliverdev/driver'),
                             ),
                             FlatButton(
-                              child: Text(AppLocalizations.of(context)
-                                  .translate('creditsButton2')),
+                              child: Text('creditsButton2'),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:

@@ -3,13 +3,10 @@ description: The Fliver Driver app
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
-    sdk: flutter
-
-  flutter_localizations:
     sdk: flutter
 
   cloud_firestore: ^0.12.9
@@ -20,7 +17,6 @@ dependencies:
   flutter_speed_dial: ^1.2.1
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21
-  intl: ^0.16.0
   share: ^0.6.3
   shared_preferences: ^0.5.3
   url_launcher: ^5.2.4
@@ -50,6 +46,6 @@ flutter:
      - assets/other/
 
   fonts:
-    - family: LexendDeca
+    - family: AvenirNextRounded
       fonts:
-        - asset: assets/fonts/LexendDeca/LexendDeca-Regular.ttf
+        - asset: assets/fonts/AvenirNextRounded/AvenirNextRounded-Medium.ttf
