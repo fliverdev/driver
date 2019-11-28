@@ -316,47 +316,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         } else {
                           // display a tip only once
                           prefs.setBool('isTipShown3', true);
-//                          showDialog(
-//                            context: context,
-//                            child: AlertDialog(
-//                              shape: RoundedRectangleBorder(
-//                                  borderRadius:
-//                                      BorderRadius.all(Radius.circular(10.0))),
-//                              title: Text(
-//                                AppLocalizations.of(context)
-//                                    .translate('titleCredits'),
-//                                style: isThemeCurrentlyDark(context)
-//                                    ? TitleStyles.white
-//                                    : TitleStyles.black,
-//                              ),
-//                              content: Text(
-//                                AppLocalizations.of(context)
-//                                    .translate('creditsPopupBody'),
-//                                style: isThemeCurrentlyDark(context)
-//                                    ? BodyStyles.white
-//                                    : BodyStyles.black,
-//                              ),
-//                              actions: <Widget>[
-//                                RaisedButton(
-//                                  child: Text(AppLocalizations.of(context)
-//                                      .translate('creditsPopupButton')),
-//                                  color: invertColorsTheme(context),
-//                                  textColor: invertInvertColorsStrong(context),
-//                                  elevation: 3.0,
-//                                  shape: RoundedRectangleBorder(
-//                                      borderRadius: BorderRadius.all(
-//                                          Radius.circular(5.0))),
-//                                  onPressed: () {
-//                                    Navigator.pop(context);
-//                                    Navigator.push(context,
-//                                        CupertinoPageRoute(builder: (context) {
-//                                      return MyCreditsPage();
-//                                    }));
-//                                  },
-//                                ),
-//                              ],
-//                            ),
-//                          );
                         }
                       },
                     ),
