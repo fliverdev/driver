@@ -1,11 +1,8 @@
 import 'package:driver/pages/map_view_page.dart';
-import 'package:driver/utils/AppLanguage.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:driver/utils/AppLanguage.dart';
-import 'package:provider/provider.dart';
 
 
 class FirstPage extends StatefulWidget {
@@ -48,7 +45,6 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget build(BuildContext context) {
-    var appLanguage = Provider.of<AppLanguage>(context);
 
     return Container(
       color: invertInvertColorsStrong(context), // blank screen
