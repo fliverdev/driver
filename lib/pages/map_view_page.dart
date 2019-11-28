@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
-import 'package:driver/utils/locale.dart';
+
+//import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
@@ -20,40 +21,50 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
   final String identity;
+
   MyMapViewPage({Key key, @required this.helper, @required this.identity})
       : super(key: key);
+
   @override
   _MyMapViewPageState createState() => _MyMapViewPageState();
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
+  var myMarkerLocation;
   var markerColor;
   var locationAnimation = 0; // used to switch between 2 kinds of animations
-  var previousMarkersWithinRadius = 0;
-  var currentMarkersWithinRadius = 0;
-  var allMarkersWithinRadius = [];
+  //var previousMarkersWithinRadius = 0;
+  //var currentMarkersWithinRadius = 0;
+  //var allMarkersWithinRadius = [];
 
   final zoom = [15.0, 17.5]; // zoom levels (0/1)
   final bearing = [0.0, 90.0]; // bearing level (0/1)
   final tilt = [0.0, 45.0]; // axis tilt (0/1)
 
-  final displayMarkersRadius = 10000.0; // radius up to which markers are loaded
+  //final hotspotRadius = 100.0; // radius that defines if a marker is 'nearby'
+  final displayMarkersRadius = 5000.0; // radius up to which markers are loaded
 
   final markerRefreshInterval =
-      Duration(seconds: 5); // timeout to repopulate markers
+  Duration(seconds: 5); // timeout to repopulate markers
   final markerExpireInterval =
-      Duration(minutes: 15); // timeout to delete old markers
+  Duration(minutes: 15); // timeout to delete old markers
 
   bool isFirstLaunch = true; // for dark mode fix
+  //bool isFirstCycle = true; // don't display swipe button in first cycle
+  //bool isButtonSwiped = false; // for showing/hiding certain widgets
+  //bool isMoving = false; // to check if moving
   bool isMarkerDeleted = false; // to check if marker was deleted
-  bool isMarkerWithinRadius = false; // to identify nearby markers
+  //bool isMyMarkerPlotted = false; // if user has already marked location
+  //bool isMyMarkerFetched = false; // if user's marker has been fetched
+  //bool isMarkerWithinRadius = false; // to identify nearby markers
 
   GoogleMapController mapController;
   Future<Position> position;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Set<Circle> hotspots = {};
   GlobalKey<ScaffoldState> scaffoldKey =
-      GlobalKey<ScaffoldState>(); // for snackbar
+  GlobalKey<ScaffoldState>(); // for snackbar
 
   @override
   void initState() {
@@ -86,20 +97,77 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   Future<Position> _setCurrentLocation() async {
     print('_setCurrentLocation() called');
     currentLocation = await Geolocator().getCurrentPosition();
+    myMarkerLocation = currentLocation;
     return currentLocation;
   }
 
   void _fetchMarkersFromDb() {
     print('_fetchMarkersFromDb() called');
-    Firestore.instance.collection('markers').getDocuments().then((docs) {
+    Firestore.instance.collection('markers').getDocuments().then((docs) async {
       var docLength = docs.documents.length;
       var clients = List(docLength);
       for (int i = 0; i < docLength; i++) {
         clients[i] = docs.documents[i];
       }
-//      _populateMarkers(clients);
+      //if (!isFirstCycle && isMyMarkerFetched) {
+      //  currentLocation = await Geolocator().getCurrentPosition();
+      //}
+      _populateMarkers(clients);
     });
   } // fetches markers from firestore
+
+  void _deleteMarker(documentId) {
+    print('_deleteMarker() called');
+    print('Deleting marker $documentId...');
+    //isMyMarkerFetched = false;
+    Firestore.instance.collection('markers').document(documentId).delete();
+    setState(() {
+      markers.remove(MarkerId(documentId));
+    });
+  } // deletes markers from firestore
+
+  Future _populateMarkers(clients) async {
+    print('_populateMarkers() called');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //bool isTipShown1 = prefs.getBool('isTipShown1') ?? false;
+    //bool isTipShown2 = prefs.getBool('isTipShown2') ?? false;
+
+    //hotspots.clear();
+    markers.clear();
+    //allMarkersWithinRadius.clear();
+    // clearing lists needed to regenerate necessary markers
+
+    for (int i = 0; i < clients.length; i++) {
+      print('_populateMarkers() loop ${i + 1}/${clients.length}');
+      var documentId = clients[i].documentID;
+      var markerId = MarkerId(documentId);
+      var markerData = clients[i].data;
+
+      var markerPosition = LatLng(markerData['position']['geopoint'].latitude,
+          markerData['position']['geopoint'].longitude);
+      var markerTimestamp = markerData['timestamp'].toDate();
+
+      var timeDiff = DateTime.now().difference(markerTimestamp);
+
+      if (timeDiff > markerExpireInterval) {
+        // if the marker is expired, it gets deleted and doesn't continue
+        print('Marker $markerId expired, deleting...');
+        _deleteMarker(documentId);
+        isMarkerDeleted = true;
+    }
+      var marker = Marker(
+        markerId: markerId,
+        position: markerPosition,
+        icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+      );
+
+      setState(() {
+        if (displayMarkersRadius >= myMarkerLocation) {
+          markers[markerId] = marker;
+        } // adds markers within 5km of my marker
+      });
+    }
+  }
 
   void _animateToLocation(location, animation) {
     print('_animateToLocation called');
@@ -121,15 +189,12 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
-//    String toggleLightsText = isThemeCurrentlyDark(context)
-//        ? AppLocalizations.of(context).translate('speedDial2.1')
-//        : AppLocalizations.of(context).translate('speedDial2.2');
+    String toggleLightsText =
+    isThemeCurrentlyDark(context) ? 'Light mode' : 'Dark mode';
 
-    return OfflineBuilder(connectivityBuilder: (
-      BuildContext context,
-      ConnectivityResult connectivity,
-      Widget child,
-    ) {
+    return OfflineBuilder(connectivityBuilder: (BuildContext context,
+        ConnectivityResult connectivity,
+        Widget child,) {
       if (connectivity == ConnectivityResult.none) {
         return NoConnection();
       } else {
@@ -175,13 +240,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                               height: 30.0,
                               child: isThemeCurrentlyDark(context)
                                   ? Image.asset(
-                                      'assets/logo/text-green.png',
-                                      fit: BoxFit.cover,
-                                    )
+                                'assets/logo/text-green.png',
+                                fit: BoxFit.cover,
+                              )
                                   : Image.asset(
-                                      'assets/logo/text-black.png',
-                                      fit: BoxFit.cover,
-                                    ),
+                                'assets/logo/text-black.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ],
                         ),
@@ -206,11 +271,12 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
-                            await Geolocator().getCurrentPosition();
+                        await Geolocator().getCurrentPosition();
                         locationAnimation == 0
                             ? locationAnimation = 1
                             : locationAnimation = 0;
-                        _animateToLocation(currentLocation, locationAnimation);
+                        _animateToLocation(
+                            currentLocation, locationAnimation);
                       },
                     ),
                     SpeedDialChild(
@@ -221,7 +287,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
-                            Theme.of(context).brightness == Brightness.dark
+                            Theme
+                                .of(context)
+                                .brightness == Brightness.dark
                                 ? Brightness.light
                                 : Brightness.dark);
                         _onMapCreated(mapController);
@@ -236,15 +304,15 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                        await SharedPreferences.getInstance();
                         bool isTipShown3 =
                             prefs.getBool('isTipShown3') ?? false;
 
                         if (isTipShown3) {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return MyCreditsPage();
-                          }));
+                                return MyCreditsPage();
+                              }));
                         } else {
                           // display a tip only once
                           prefs.setBool('isTipShown3', true);
