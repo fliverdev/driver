@@ -1,4 +1,5 @@
 import 'package:driver/pages/map_view_page.dart';
+import 'package:driver/pages/onboarding_page.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,24 +17,25 @@ class _FirstPageState extends State<FirstPage> {
     String uuid = prefs.getString('uuid') ?? Uuid().v4();
     // generates random uuid as string
 
-//    if (isFirstLaunch) {
-//      Navigator.pushAndRemoveUntil(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) => MyIntroPage(
-//                    helper: prefs,
-//                    flag: isFirstLaunch,
-//                    identity: uuid,
-//                  )),
-//          (Route<dynamic> route) => false);
-//      // very first launch since install
-//    } else {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MyMapViewPage(helper: prefs, identity: uuid)),
-        (Route<dynamic> route) => false);
-//    }
+    if (isFirstLaunch) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyOnboardingPage1(
+                    helper: prefs,
+                    flag: isFirstLaunch,
+                    identity: uuid,
+                  )),
+          (Route<dynamic> route) => false);
+      // very first launch since install
+    } else {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MyMapViewPage(helper: prefs, identity: uuid)),
+          (Route<dynamic> route) => false);
+    }
   }
 
   @override
