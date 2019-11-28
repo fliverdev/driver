@@ -39,17 +39,6 @@ class MyApp extends StatelessWidget {
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
-
-          supportedLocales: [
-        Locale('en', ''), // English
-        Locale('hi', ''), // Hindi
-        Locale('mr', ''), // Marathi
-      ],
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ], // causes the function to crash
           title: 'Fliver Driver',
           theme: theme,
           home: FirstPage(),

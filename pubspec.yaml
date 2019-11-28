@@ -3,15 +3,11 @@ description: The Fliver Driver app
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  flutter_localizations:
-    sdk: flutter
-  flutter_cupertino_localizations: ^1.0.1
 
   cloud_firestore: ^0.12.9
   cupertino_icons: ^0.1.2
@@ -21,7 +17,6 @@ dependencies:
   flutter_speed_dial: ^1.2.1
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21
-  intl: ^0.15.8
   share: ^0.6.3
   provider: ^3.1.0
   shared_preferences: ^0.5.3
@@ -50,9 +45,6 @@ flutter:
      - assets/flare/
      - assets/logo/
      - assets/other/
-     - i18n/en.json
-     - i18n/hi.json
-     - i18n/mr.json
 
   fonts:
     - family: AvenirNextRounded

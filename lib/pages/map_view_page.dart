@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
-import 'package:driver/utils/locale.dart';
 import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/ui_helpers.dart';
@@ -20,19 +19,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
   final String identity;
+
   MyMapViewPage({Key key, @required this.helper, @required this.identity})
       : super(key: key);
+
   @override
   _MyMapViewPageState createState() => _MyMapViewPageState();
 }
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
-  var markerColor;
+  var markerColor = 165.0; // fliver green marker
   var locationAnimation = 0; // used to switch between 2 kinds of animations
-  var previousMarkersWithinRadius = 0;
-  var currentMarkersWithinRadius = 0;
-  var allMarkersWithinRadius = [];
 
   final zoom = [15.0, 17.5]; // zoom levels (0/1)
   final bearing = [0.0, 90.0]; // bearing level (0/1)
@@ -47,11 +45,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   bool isFirstLaunch = true; // for dark mode fix
   bool isMarkerDeleted = false; // to check if marker was deleted
-  bool isMarkerWithinRadius = false; // to identify nearby markers
 
   GoogleMapController mapController;
   Future<Position> position;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Set<Circle> hotspots = {};
   GlobalKey<ScaffoldState> scaffoldKey =
       GlobalKey<ScaffoldState>(); // for snackbar
 
@@ -70,11 +68,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     if (isFirstLaunch) {
       _fetchMarkersFromDb();
       mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
+          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap2 : lightMap2);
       isFirstLaunch = false;
     } else {
       mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap : darkMap);
+          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap2 : darkMap2);
     } // weird fix for broken dark mode
 
     Timer.periodic(markerRefreshInterval, (Timer t) {
@@ -91,15 +89,69 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   void _fetchMarkersFromDb() {
     print('_fetchMarkersFromDb() called');
-    Firestore.instance.collection('markers').getDocuments().then((docs) {
+    Firestore.instance.collection('markers').getDocuments().then((docs) async {
       var docLength = docs.documents.length;
       var clients = List(docLength);
       for (int i = 0; i < docLength; i++) {
         clients[i] = docs.documents[i];
       }
-//      _populateMarkers(clients);
+      currentLocation = await Geolocator().getCurrentPosition();
+      _populateMarkers(clients);
     });
   } // fetches markers from firestore
+
+  void _deleteMarker(documentId) {
+    print('_deleteMarker() called');
+    print('Deleting marker $documentId...');
+    //isMyMarkerFetched = false;
+    Firestore.instance.collection('markers').document(documentId).delete();
+    setState(() {
+      markers.remove(MarkerId(documentId));
+    });
+  } // deletes markers from firestore
+
+  Future _populateMarkers(clients) async {
+    print('_populateMarkers() called');
+    markers.clear();
+
+    for (int i = 0; i < clients.length; i++) {
+      print('_populateMarkers() loop ${i + 1}/${clients.length}');
+      var documentId = clients[i].documentID;
+      var markerId = MarkerId(documentId);
+      var markerData = clients[i].data;
+
+      var markerPosition = LatLng(markerData['position']['geopoint'].latitude,
+          markerData['position']['geopoint'].longitude);
+      var markerTimestamp = markerData['timestamp'].toDate();
+
+      var timeDiff = DateTime.now().difference(markerTimestamp);
+
+      var distance = await Geolocator().distanceBetween(
+        currentLocation.latitude.toDouble(),
+        currentLocation.longitude.toDouble(),
+        markerPosition.latitude.toDouble(),
+        markerPosition.longitude.toDouble(),
+      ); // distance between my location and other markers
+
+      if (timeDiff > markerExpireInterval) {
+        // if the marker is expired, it gets deleted and doesn't continue
+        print('Marker $markerId expired, deleting...');
+        _deleteMarker(documentId);
+        isMarkerDeleted = true;
+      }
+      var marker = Marker(
+        markerId: markerId,
+        position: markerPosition,
+        icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+      );
+
+      setState(() {
+        if (displayMarkersRadius >= distance) {
+          markers[markerId] = marker;
+        } // adds markers within 10km of my marker
+      });
+    }
+  }
 
   void _animateToLocation(location, animation) {
     print('_animateToLocation called');
@@ -121,9 +173,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     Icon toggleLightsIcon = isThemeCurrentlyDark(context)
         ? Icon(Icons.brightness_7)
         : Icon(Icons.brightness_2);
-//    String toggleLightsText = isThemeCurrentlyDark(context)
-//        ? AppLocalizations.of(context).translate('speedDial2.1')
-//        : AppLocalizations.of(context).translate('speedDial2.2');
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -248,47 +297,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         } else {
                           // display a tip only once
                           prefs.setBool('isTipShown3', true);
-//                          showDialog(
-//                            context: context,
-//                            child: AlertDialog(
-//                              shape: RoundedRectangleBorder(
-//                                  borderRadius:
-//                                      BorderRadius.all(Radius.circular(10.0))),
-//                              title: Text(
-//                                AppLocalizations.of(context)
-//                                    .translate('titleCredits'),
-//                                style: isThemeCurrentlyDark(context)
-//                                    ? TitleStyles.white
-//                                    : TitleStyles.black,
-//                              ),
-//                              content: Text(
-//                                AppLocalizations.of(context)
-//                                    .translate('creditsPopupBody'),
-//                                style: isThemeCurrentlyDark(context)
-//                                    ? BodyStyles.white
-//                                    : BodyStyles.black,
-//                              ),
-//                              actions: <Widget>[
-//                                RaisedButton(
-//                                  child: Text(AppLocalizations.of(context)
-//                                      .translate('creditsPopupButton')),
-//                                  color: invertColorsTheme(context),
-//                                  textColor: invertInvertColorsStrong(context),
-//                                  elevation: 3.0,
-//                                  shape: RoundedRectangleBorder(
-//                                      borderRadius: BorderRadius.all(
-//                                          Radius.circular(5.0))),
-//                                  onPressed: () {
-//                                    Navigator.pop(context);
-//                                    Navigator.push(context,
-//                                        CupertinoPageRoute(builder: (context) {
-//                                      return MyCreditsPage();
-//                                    }));
-//                                  },
-//                                ),
-//                              ],
-//                            ),
-//                          );
                         }
                       },
                     ),
