@@ -2,9 +2,7 @@ import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:driver/utils/locale.dart';
 import 'package:driver/pages/map_view_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:driver/utils/AppLanguage.dart';
 import 'package:provider/provider.dart';
 
