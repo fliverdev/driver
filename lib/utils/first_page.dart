@@ -21,7 +21,7 @@ class _FirstPageState extends State<FirstPage> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => MyOnboardingPage2(
+              builder: (context) => MyOnboardingPage1(
                     helper: prefs,
                     flag: isFirstLaunch,
                     identity: uuid,

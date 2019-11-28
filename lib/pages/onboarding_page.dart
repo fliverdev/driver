@@ -1,6 +1,7 @@
 import 'package:driver/pages/map_view_page.dart';
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +18,111 @@ class MyOnboardingPage1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Material(
+      child: Container(
+        color: MyColors.primary,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 170.0,
+                  height: 54.0,
+                  child: Image.asset(
+                    'assets/logo/text-black.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+                Container(
+                  width: 150.0,
+                  height: 150.0,
+                  child: Image.asset(
+                    'assets/other/rickshaw.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+                Text(
+                  'Choose a language:',
+                  style: TitleStyles.black,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text('English'),
+                      color: MyColors.black,
+                      textColor: MyColors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyOnboardingPage2(
+                              helper: helper, identity: identity);
+                        }));
+                        // TODO: implement translations
+                      },
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    RaisedButton(
+                      child: Text('Hindi'),
+                      color: MyColors.black,
+                      textColor: MyColors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyOnboardingPage2(
+                              helper: helper, identity: identity);
+                        }));
+                        // TODO: implement translations
+                      },
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    RaisedButton(
+                      child: Text('Marathi'),
+                      color: MyColors.black,
+                      textColor: MyColors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyOnboardingPage2(
+                              helper: helper, identity: identity);
+                        }));
+                        // TODO: implement translations
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -49,7 +154,7 @@ class MyOnboardingPage2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 60.0,
+                    height: 100.0,
                   ),
                   Text(
                     'Bhada Dhundo!',
