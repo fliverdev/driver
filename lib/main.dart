@@ -2,25 +2,11 @@ import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:driver/pages/map_view_page.dart';
-import 'package:driver/utils/AppLanguage.dart';
-import 'package:provider/provider.dart';
 
-void main() async {
-  AppLanguage appLanguage = AppLanguage();
-  await appLanguage.fetchLocale();
-  runApp(MyApp(
-    appLanguage: appLanguage,
-  ));
-}
-
-
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 
-  final AppLanguage appLanguage;
-
-  MyApp({this.appLanguage});
 
 
   @override
