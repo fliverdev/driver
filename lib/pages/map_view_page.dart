@@ -294,11 +294,54 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         if (isTipShown3) {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return MyCreditsPage(language: widget.language);
+                            return MyCreditsPage(
+                              language: widget.language,
+                            );
                           }));
                         } else {
                           // display a tip only once
                           widget.helper.setBool('isTipShown3', true);
+                          showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              title: Text(
+                                'Credits',
+                                style: isThemeCurrentlyDark(context)
+                                    ? TitleStyles.white
+                                    : TitleStyles.black,
+                              ),
+                              content: Text(
+                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
+                                '\n\nTap anyone\'s name to open up their profile!',
+                                style: isThemeCurrentlyDark(context)
+                                    ? BodyStyles.white
+                                    : BodyStyles.black,
+                              ),
+                              actions: <Widget>[
+                                RaisedButton(
+                                  child: Text('Okay'),
+                                  color: invertColorsTheme(context),
+                                  textColor: invertInvertColorsStrong(context),
+                                  elevation: 3.0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0))),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        CupertinoPageRoute(builder: (context) {
+                                      return MyCreditsPage(
+                                        language: widget.language,
+                                      );
+                                    }));
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
                         }
                       },
                     ),
