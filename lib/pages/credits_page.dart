@@ -1,5 +1,6 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyCreditsPage extends StatefulWidget {
+  final String language;
+  MyCreditsPage({Key key, @required this.language}) : super(key: key);
+
   @override
   _MyCreditsPageState createState() => _MyCreditsPageState();
 }
@@ -46,7 +50,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                     },
                   ),
                   Text(
-                    'titleCredits',
+                    onboardingPage2Heading(widget.language),
                     style: isThemeCurrentlyDark(context)
                         ? TitleStyles.white
                         : TitleStyles.black,
