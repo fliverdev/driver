@@ -15,6 +15,7 @@ class _FirstPageState extends State<FirstPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
     String uuid = prefs.getString('uuid') ?? Uuid().v4();
+    String lang = prefs.getString('language') ?? '';
     // generates random uuid as string
 
     if (isFirstLaunch) {
@@ -33,7 +34,7 @@ class _FirstPageState extends State<FirstPage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  MyMapViewPage(helper: prefs, identity: uuid)),
+                  MyMapViewPage(helper: prefs, identity: uuid, language: lang)),
           (Route<dynamic> route) => false);
     }
   }

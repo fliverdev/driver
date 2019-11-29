@@ -1,9 +1,13 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 class NoConnection extends StatelessWidget {
+  final String language;
+  NoConnection({Key key, @required this.language}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -29,7 +33,7 @@ class NoConnection extends StatelessWidget {
                   height: 30.0,
                 ),
                 Text(
-                  'Oops...there\'s no Internet!',
+                  'Oops...there\'s no Internet! ${onboardingPage2Heading(language)}',
                   style: TitleStyles.black,
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'package:driver/pages/map_view_page.dart';
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,12 +70,15 @@ class MyOnboardingPage1 extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
+                        helper.setString('language', 'en');
+
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
                           return MyOnboardingPage2(
-                              helper: helper, identity: identity);
+                              helper: helper,
+                              identity: identity,
+                              language: 'en');
                         }));
-                        // TODO: implement translations
                       },
                     ),
                     SizedBox(
@@ -88,12 +92,15 @@ class MyOnboardingPage1 extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
+                        helper.setString('language', 'hi');
+
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
                           return MyOnboardingPage2(
-                              helper: helper, identity: identity);
+                              helper: helper,
+                              identity: identity,
+                              language: 'hi');
                         }));
-                        // TODO: implement translations
                       },
                     ),
                     SizedBox(
@@ -107,12 +114,15 @@ class MyOnboardingPage1 extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
+                        helper.setString('language', 'mr');
+
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
                           return MyOnboardingPage2(
-                              helper: helper, identity: identity);
+                              helper: helper,
+                              identity: identity,
+                              language: 'mr');
                         }));
-                        // TODO: implement translations
                       },
                     ),
                   ],
@@ -128,13 +138,13 @@ class MyOnboardingPage1 extends StatelessWidget {
 
 class MyOnboardingPage2 extends StatelessWidget {
   final SharedPreferences helper;
-  final bool flag;
   final String identity;
+  final String language;
   MyOnboardingPage2(
       {Key key,
       @required this.helper,
-      @required this.flag,
-      @required this.identity})
+      @required this.identity,
+      @required this.language})
       : super(key: key);
 
   @override
@@ -157,7 +167,7 @@ class MyOnboardingPage2 extends StatelessWidget {
                     height: 100.0,
                   ),
                   Text(
-                    'Bhada Dhundo!',
+                    onboardingPage2Heading(language),
                     style: HeadingStyles.black,
                   ),
                   SizedBox(
@@ -313,9 +323,6 @@ class MyOnboardingPage2 extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       ),
                       onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-
                         helper.setBool('isFirstLaunch', false);
                         helper.setString('uuid', identity);
 
@@ -323,7 +330,10 @@ class MyOnboardingPage2 extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MyMapViewPage(
-                                    helper: prefs, identity: identity)),
+                                      helper: helper,
+                                      identity: identity,
+                                      language: language,
+                                    )),
                             (Route<dynamic> route) => false);
                       },
                     ),
