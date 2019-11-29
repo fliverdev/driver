@@ -186,7 +186,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       Widget child,
     ) {
       if (connectivity == ConnectivityResult.none) {
-        return NoConnection();
+        return NoConnection(language: widget.language);
       } else {
         return child;
       }
@@ -196,7 +196,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
           future: position,
           builder: (context, data) {
             if (!data.hasData) {
-              return FetchingLocation();
+              return FetchingLocation(language: widget.language);
             } else {
               // when current location is obtained
               return Scaffold(
