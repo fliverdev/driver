@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:driver/utils/map_marker.dart';
+import 'package:fluster/fluster.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_styles.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:driver/utils/map_helper.dart';
 
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
@@ -26,6 +28,16 @@ class MyMapViewPage extends StatefulWidget {
   @override
   _MyMapViewPageState createState() => _MyMapViewPageState();
 }
+
+
+/// Minimum zoom at which the markers will cluster
+final int _minClusterZoom = 0;
+
+/// Maximum zoom at which the markers will cluster
+final int _maxClusterZoom = 19;
+
+/// [Fluster] instance used to manage the clusters
+Fluster<MapMarker> _clusterManager;
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
@@ -143,6 +155,13 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         markerId: markerId,
         position: markerPosition,
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+      );
+
+      _clusterManager = await MapHelper.initClusterManager(
+        markers,
+        _minClusterZoom,
+        _maxClusterZoom,
+
       );
 
       setState(() {
