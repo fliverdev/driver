@@ -201,10 +201,10 @@ class MyOnboardingPage2 extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'How does it work?',
-                              style: SubTitleStyles.black,
+                              style: SubHeadingStyles.black,
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 5.0,
                             ),
                             Text(
                               'Swipe the button to notify nearby Drivers about your location.',
@@ -246,10 +246,10 @@ class MyOnboardingPage2 extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'How do I get to know?',
-                              style: SubTitleStyles.black,
+                              style: SubHeadingStyles.black,
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 5.0,
                             ),
                             Text(
                               'When 3 or more Riders in an area mark their location, a hotspot is created and Drivers get notified.',
@@ -291,10 +291,10 @@ class MyOnboardingPage2 extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'Is it free?',
-                              style: SubTitleStyles.black,
+                              style: SubHeadingStyles.black,
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 5.0,
                             ),
                             Text(
                               'Fuck yes!!!',
