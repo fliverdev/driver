@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/fetching_location.dart';
 import 'package:driver/widgets/no_connection.dart';
@@ -19,8 +20,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
   final String identity;
+  final String language;
 
-  MyMapViewPage({Key key, @required this.helper, @required this.identity})
+  MyMapViewPage(
+      {Key key,
+      @required this.helper,
+      @required this.identity,
+      @required this.language})
       : super(key: key);
 
   @override
@@ -180,7 +186,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       Widget child,
     ) {
       if (connectivity == ConnectivityResult.none) {
-        return NoConnection();
+        return NoConnection(language: widget.language);
       } else {
         return child;
       }
@@ -190,7 +196,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
           future: position,
           builder: (context, data) {
             if (!data.hasData) {
-              return FetchingLocation();
+              return FetchingLocation(language: widget.language);
             } else {
               // when current location is obtained
               return Scaffold(
@@ -250,8 +256,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label:
-//                          AppLocalizations.of(context).translate('speedDial1'),
+                      label: onboardingPage2Heading(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
@@ -266,7 +271,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: toggleLightsIcon,
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label: toggleLightsText,
+                      label: onboardingPage2Heading(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
@@ -280,23 +285,63 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label:
-//                          AppLocalizations.of(context).translate('speedDial3'),
+                      label: onboardingPage2Heading(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
                         bool isTipShown3 =
-                            prefs.getBool('isTipShown3') ?? false;
+                            widget.helper.getBool('isTipShown3') ?? false;
 
                         if (isTipShown3) {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return MyCreditsPage();
+                            return MyCreditsPage(
+                              language: widget.language,
+                            );
                           }));
                         } else {
                           // display a tip only once
-                          prefs.setBool('isTipShown3', true);
+                          widget.helper.setBool('isTipShown3', true);
+                          showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              title: Text(
+                                'Credits',
+                                style: isThemeCurrentlyDark(context)
+                                    ? TitleStyles.white
+                                    : TitleStyles.black,
+                              ),
+                              content: Text(
+                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
+                                '\n\nTap anyone\'s name to open up their profile!',
+                                style: isThemeCurrentlyDark(context)
+                                    ? BodyStyles.white
+                                    : BodyStyles.black,
+                              ),
+                              actions: <Widget>[
+                                RaisedButton(
+                                  child: Text('Okay'),
+                                  color: invertColorsTheme(context),
+                                  textColor: invertInvertColorsStrong(context),
+                                  elevation: 3.0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0))),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        CupertinoPageRoute(builder: (context) {
+                                      return MyCreditsPage(
+                                        language: widget.language,
+                                      );
+                                    }));
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
                         }
                       },
                     ),
