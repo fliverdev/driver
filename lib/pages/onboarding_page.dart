@@ -85,7 +85,7 @@ class MyOnboardingPage1 extends StatelessWidget {
                       width: 10.0,
                     ),
                     RaisedButton(
-                      child: Text('Hindi'),
+                      child: Text('हिंदी'),
                       color: MyColors.black,
                       textColor: MyColors.white,
                       elevation: 3.0,
@@ -107,7 +107,7 @@ class MyOnboardingPage1 extends StatelessWidget {
                       width: 10.0,
                     ),
                     RaisedButton(
-                      child: Text('Marathi'),
+                      child: Text('मराठी'),
                       color: MyColors.black,
                       textColor: MyColors.white,
                       elevation: 3.0,
@@ -167,7 +167,7 @@ class MyOnboardingPage2 extends StatelessWidget {
                     height: 100.0,
                   ),
                   Text(
-                    onboardingPage2Heading(language),
+                    onboardingPageHeading(language),
                     style: HeadingStyles.black,
                   ),
                   SizedBox(
@@ -200,14 +200,14 @@ class MyOnboardingPage2 extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'How does it work?',
+                              onboardingPageTitle1(language),
                               style: SubHeadingStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              'Swipe the button to notify nearby Drivers about your location.',
+                              onboardingPageTitle1Body1(language),
                               style: BodyStyles.black,
                             ),
                           ],
@@ -245,14 +245,14 @@ class MyOnboardingPage2 extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'How do I get to know?',
+                              onboardingPageTitle2(language),
                               style: SubHeadingStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              'When 3 or more Riders in an area mark their location, a hotspot is created and Drivers get notified.',
+                              onboardingPageTitle2Body2(language),
                               style: BodyStyles.black,
                             ),
                           ],
@@ -290,14 +290,14 @@ class MyOnboardingPage2 extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Is it free?',
+                              onboardingPageTitle3(language),
                               style: SubHeadingStyles.black,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Text(
-                              'Fuck yes!!!',
+                              onboardingPageTitle3Body3(language),
                               style: BodyStyles.black,
                             ),
                           ],

@@ -33,7 +33,7 @@ class FetchingLocation extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Fetching location... ${onboardingPage2Heading(language)}',
+                  fetchingLocation(language),
                   style: isThemeCurrentlyDark(context)
                       ? TitleStyles.white
                       : TitleStyles.black,

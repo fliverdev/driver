@@ -256,7 +256,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: speedial1(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
@@ -271,7 +271,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: toggleLightsIcon,
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: speedial2a(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
@@ -285,7 +285,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: speedial3(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         bool isTipShown3 =

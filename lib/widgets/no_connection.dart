@@ -33,7 +33,7 @@ class NoConnection extends StatelessWidget {
                   height: 30.0,
                 ),
                 Text(
-                  'Oops...there\'s no Internet! ${onboardingPage2Heading(language)}',
+                  noConnection(language),
                   style: TitleStyles.black,
                 ),
               ],
