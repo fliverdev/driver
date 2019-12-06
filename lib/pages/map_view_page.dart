@@ -176,9 +176,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   @override
   Widget build(BuildContext context) {
     print('Widget build() called');
-    Icon toggleLightsIcon = isThemeCurrentlyDark(context)
-        ? Icon(Icons.brightness_7)
-        : Icon(Icons.brightness_2);
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -256,22 +253,24 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: speedial1(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
                             await Geolocator().getCurrentPosition();
-                        locationAnimation == 0
-                            ? locationAnimation = 1
-                            : locationAnimation = 0;
+                        locationAnimation = 0;
                         _animateToLocation(currentLocation, locationAnimation);
                       },
                     ),
                     SpeedDialChild(
-                      child: toggleLightsIcon,
+                      child: isThemeCurrentlyDark(context)
+                          ? Icon(Icons.brightness_7)
+                          : Icon(Icons.brightness_2),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: isThemeCurrentlyDark(context)
+                          ? speedial2a(widget.language)
+                          : speedial2b(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
@@ -285,64 +284,15 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-                      label: onboardingPage2Heading(widget.language),
+                      label: speedial3(widget.language),
                       labelStyle: LabelStyles.black,
-                      onTap: () async {
-                        bool isTipShown3 =
-                            widget.helper.getBool('isTipShown3') ?? false;
-
-                        if (isTipShown3) {
-                          Navigator.push(context,
-                              CupertinoPageRoute(builder: (context) {
-                            return MyCreditsPage(
-                              language: widget.language,
-                            );
-                          }));
-                        } else {
-                          // display a tip only once
-                          widget.helper.setBool('isTipShown3', true);
-                          showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              title: Text(
-                                'Credits',
-                                style: isThemeCurrentlyDark(context)
-                                    ? TitleStyles.white
-                                    : TitleStyles.black,
-                              ),
-                              content: Text(
-                                'Fliver was developed by three Computer Engineering students from MPSTME, NMIMS.'
-                                '\n\nTap anyone\'s name to open up their profile!',
-                                style: isThemeCurrentlyDark(context)
-                                    ? BodyStyles.white
-                                    : BodyStyles.black,
-                              ),
-                              actions: <Widget>[
-                                RaisedButton(
-                                  child: Text('Okay'),
-                                  color: invertColorsTheme(context),
-                                  textColor: invertInvertColorsStrong(context),
-                                  elevation: 3.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0))),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.push(context,
-                                        CupertinoPageRoute(builder: (context) {
-                                      return MyCreditsPage(
-                                        language: widget.language,
-                                      );
-                                    }));
-                                  },
-                                ),
-                              ],
-                            ),
+                      onTap: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyCreditsPage(
+                            language: widget.language,
                           );
-                        }
+                        }));
                       },
                     ),
                   ],
