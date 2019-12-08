@@ -12,8 +12,7 @@ The following are the files that have been encrypted:
 In order to resolve this, you must replace the encrypted files with files containing your own API credentials. These API credentials can be obtained by [creating a new Firebase project](https://console.firebase.google.com/) and following the instructions from there.
 
 ### Android Manifest
-
-Replace the encrypted `AndroidManifest.xml` with the following contents:
+Replace the encrypted `AndroidManifest.xml` with the following contents, and replace "YOUR_API_KEY" with your own:
 
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,7 +48,7 @@ Replace the encrypted `AndroidManifest.xml` with the following contents:
 
 ### iOS App Delegate
 
-Replace the encrypted `AppDelegate.swift` with the following contents:
+Replace the encrypted `AppDelegate.swift` with the following contents, and replace "YOUR_API_KEY" with your own:
 
 ```
 import UIKit
