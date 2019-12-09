@@ -213,7 +213,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             FlatButton(
-                              child: Text(creditsFooterButton1(widget.language)),
+                              child:
+                                  Text(creditsFooterButton1(widget.language)),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -222,7 +223,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                                   'https://github.com/fliverdev/driver'),
                             ),
                             FlatButton(
-                              child: Text(creditsFooterButton2(widget.language)),
+                              child:
+                                  Text(creditsFooterButton2(widget.language)),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:

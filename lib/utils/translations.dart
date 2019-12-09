@@ -2,9 +2,9 @@ String onboardingPageHeading(String language) {
   if (language == 'en') {
     return 'Find Customers!';
   } else if (language == 'hi') {
-    return 'भाड़ा ढूंढे !';
+    return 'भाड़ा ढूंढे!';
   } else if (language == 'mr') {
-    return 'भाड़ा शोध';
+    return 'भाड़ा शोध!';
   } else {
     return 'Translation error';
   }
@@ -14,7 +14,7 @@ String onboardingPageTitle1(String language) {
   if (language == 'en') {
     return 'How does it work?';
   } else if (language == 'hi') {
-    return 'यह कैसे काम करता है ?';
+    return 'यह कैसे काम करता है?';
   } else if (language == 'mr') {
     return 'हे कसे काम करते?';
   } else {
@@ -24,11 +24,11 @@ String onboardingPageTitle1(String language) {
 
 String onboardingPageTitle1Body1(String language) {
   if (language == 'en') {
-    return 'Swipe the button to notify nearby Drivers about your location.';
+    return 'Find out where Riders are waiting for Rickshaws';
   } else if (language == 'hi') {
-    return 'पास में सवार का पता लगाएँ और उनकी ओर दिशाएँ प्राप्त करें ';
+    return 'पास में सवार का पता लगाएँ और उनकी ओर दिशाएँ प्राप्त करें';
   } else if (language == 'mr') {
-    return 'हे कसे काम करते?';
+    return 'हे कसे काम करते?'; // fix
   } else {
     return 'Translation error';
   }
@@ -38,7 +38,7 @@ String onboardingPageTitle2(String language) {
   if (language == 'en') {
     return 'How do I get to know?';
   } else if (language == 'hi') {
-    return 'मुझे कैसे सूचित किया जाएगा? ';
+    return 'मुझे कैसे सूचित किया जाएगा?';
   } else if (language == 'mr') {
     return 'मला कसे सूचित केले जाईल?';
   } else {
@@ -48,7 +48,7 @@ String onboardingPageTitle2(String language) {
 
 String onboardingPageTitle2Body2(String language) {
   if (language == 'en') {
-    return 'When 3 or more Riders in an area mark their location, a hotspot is created and Drivers get notified.';
+    return 'When new Riders mark their location, you will get notified.';
   } else if (language == 'hi') {
     return 'जैसे ही नए सवार चिह्नित किए जाएंगे हम आपको एक नोटिफिकेशन भेज देंगे';
   } else if (language == 'mr') {
@@ -72,11 +72,23 @@ String onboardingPageTitle3(String language) {
 
 String onboardingPageTitle3Body3(String language) {
   if (language == 'en') {
-    return 'Yes it is completely free!';
+    return 'Yes, it is completely free!';
   } else if (language == 'hi') {
-    return 'हाँ यह ऑटो चालकों के लिए उपयोग करने के लिए पूरी तरह से स्वतंत्र है';
+    return 'हाँ, यह एप्लिकेशन पूरी तरह से मुक्त है!';
   } else if (language == 'mr') {
-    return 'होय हा अँप ऑटो चालकों वापरणे पूर्णपणे विनामूल्य आहे';
+    return 'होय हा, अँप ऑटो चालकों वापरणे पूर्णपणे विनामूल्य आहे!';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String onboardingPageButton(String language) {
+  if (language == 'en') {
+    return 'Let\'s Go!';
+  } else if (language == 'hi') {
+    return 'शुरू करो';
+  } else if (language == 'mr') {
+    return 'सुरु करू!';
   } else {
     return 'Translation error';
   }
@@ -134,7 +146,7 @@ String creditsContainerBody1(String language) {
   if (language == 'en') {
     return 'I like developing apps.';
   } else if (language == 'hi') {
-    return 'मुझे ऐप्स को कोड करना पसंद है।';
+    return 'मुझे एप्लिकेशन को बनाना पसंद है।';
   } else if (language == 'mr') {
     return 'मला अ‍ॅप्स कोड करायला आवडतात.';
   } else {
@@ -158,9 +170,9 @@ String creditsContainerBody3(String language) {
   if (language == 'en') {
     return 'I like designing UI.';
   } else if (language == 'hi') {
-    return 'मुझे यूआई डिजाइन करना पसंद है।';
+    return 'मुझे डिजाइन करना पसंद है।';
   } else if (language == 'mr') {
-    return 'मला यूआय डिझाइन करायला आवडते';
+    return 'मला डिझाइन करायला आवडते';
   } else {
     return 'Translation error';
   }
@@ -170,9 +182,9 @@ String creditsFooter(String language) {
   if (language == 'en') {
     return 'Built using Flutter 📲 \nCompletely free & Open Source \nMade with ❤️ in Mumbai, India';
   } else if (language == 'hi') {
-    return 'फ्लटर का उपयोग कर बनाया गया 📲 \nपूरी तरह से मुक्त और ओपन सोर्स \nमुंबई, भारत में ❤️के साथ बनाया गया';
+    return 'फ्लटर का उपयोग कर बनाया गया 📲 \nपूरी तरह से मुक्त और ओपन सोर्स \nमुंबई, भारत में ❤️ के साथ बनाया गया';
   } else if (language == 'mr') {
-    return 'फ्लटरच्या पासून बनवले 📲 \nपूर्णपणे मुक्त आणि ओपन सोर्स \nमुंबई, भारत मध्ये ❤️बनविलेले';
+    return 'फ्लटरच्या पासून बनवले 📲 \nपूर्णपणे मुक्त आणि ओपन सोर्स \nमुंबई, भारत मध्ये ❤ ️बनविलेले';
   } else {
     return 'Translation error';
   }
@@ -254,9 +266,9 @@ String noConnection(String language) {
   if (language == 'en') {
     return 'Oops...there\'s no Internet!';
   } else if (language == 'hi') {
-    return 'इंटरनेट नहीं है';
+    return 'इंटरनेट नहीं है!';
   } else if (language == 'mr') {
-    return 'इंटरनेट नाही';
+    return 'इंटरनेट नाही आहे!';
   } else {
     return 'Translation error';
   }

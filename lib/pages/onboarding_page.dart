@@ -313,7 +313,7 @@ class MyOnboardingPage2 extends StatelessWidget {
                     minWidth: 180.0,
                     child: RaisedButton(
                       child: Text(
-                        'Let\'s Go!',
+                        onboardingPageButton(language),
                         style: BodyStyles.white,
                       ),
                       color: MyColors.black,
