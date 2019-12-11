@@ -25,7 +25,6 @@ dependencies:
   uuid: ^2.0.4
   flutter_cache_manager: ^1.1.1
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

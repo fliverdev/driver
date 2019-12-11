@@ -37,7 +37,11 @@ final int _minClusterZoom = 0;
 final int _maxClusterZoom = 19;
 
 /// [Fluster] instance used to manage the clusters
-Fluster<MapMarker> _clusterManager;
+Fluster<Markers> _clusterManager;
+
+/// Url image used on cluster markers
+final String _clusterImageUrl =
+    'http://i2picture.com/images/symbols/geometry/large_circle_u25EF_icon_256x256.png';
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
   var currentLocation;
@@ -72,6 +76,31 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     position = _setCurrentLocation();
     print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
+
+  /// Gets the markers and clusters to be displayed on the map for the current zoom level and
+  /// updates state.
+  void _updateMarkers([double updatedZoom]) {
+    if (_clusterManager == null || updatedZoom == zoom[0]) return;
+
+    if (updatedZoom != null) {
+      zoom[0] = updatedZoom;
+    }
+
+
+    Set<Marker>.of(markers.values)
+      ..clear()
+      ..addAll(MapHelper.getClusterMarkers(_clusterManager, zoom[0]));
+
+  }
+
+  /// Inits [Fluster] and all the markers with network images and updates the loading state.
+  void _initMarkers() async {
+
+
+
+
+  }
+
 
   void _onMapCreated(GoogleMapController controller) {
     print('_onMapCreated() called');
@@ -138,6 +167,14 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
       var timeDiff = DateTime.now().difference(markerTimestamp);
 
+      _clusterManager = await MapHelper.initClusterManager(
+        markers.values.toList(),
+        _minClusterZoom,
+        _maxClusterZoom,
+        _clusterImageUrl,
+      );
+
+      _updateMarkers();
       var distance = await Geolocator().distanceBetween(
         currentLocation.latitude.toDouble(),
         currentLocation.longitude.toDouble(),
@@ -157,12 +194,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
       );
 
-      _clusterManager = await MapHelper.initClusterManager(
-        markers,
-        _minClusterZoom,
-        _maxClusterZoom,
 
-      );
 
       setState(() {
         if (displayMarkersRadius >= distance) {

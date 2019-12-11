@@ -8,12 +8,12 @@ import 'package:meta/meta.dart';
 /// your use case. For instance, you can pass an onTap callback or add an
 /// [InfoWindow] to your marker here, then you can use the [toMarker] method to convert
 /// this to a proper [Marker] that the [GoogleMap] can read.
-class MapMarker extends Clusterable {
+class Markers extends Clusterable {
   final String id;
   final LatLng position;
   final BitmapDescriptor icon;
 
-  MapMarker({
+  Markers({
     @required this.id,
     @required this.position,
     @required this.icon,

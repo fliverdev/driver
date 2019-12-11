@@ -5,8 +5,8 @@ import 'dart:ui';
 
 import 'package:fluster/fluster.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:driver/utils/map_marker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// In here we are encapsulating all the logic required to get marker icons from url images
 /// and to show clusters using the [Fluster] package.
@@ -67,17 +67,21 @@ class MapHelper {
   /// Here we're also setting up the cluster marker itself, also with an [clusterImageUrl].
   ///
   /// For more info about customizing your clustering logic check the [Fluster] constructor.
-  static Future<Fluster<MapMarker>> initClusterManager(
-  Map<MarkerId, Marker> markers,
+  static Future<Fluster<Markers>> initClusterManager(
+    List<Markers> markers,
     int minZoom,
     int maxZoom,
+    String clusterImageUrl,
   ) async {
     assert(markers != null);
     assert(minZoom != null);
     assert(maxZoom != null);
+    assert(clusterImageUrl != null);
 
+    final BitmapDescriptor clusterImage =
+        await MapHelper.getMarkerImageFromUrl(clusterImageUrl);
 
-    return Fluster<MapMarker>(
+    return Fluster<Markers>(
       minZoom: minZoom,
       maxZoom: maxZoom,
       radius: 150,
@@ -89,9 +93,10 @@ class MapHelper {
         double lng,
         double lat,
       ) =>
-          MapMarker(
+          Markers(
         id: cluster.id.toString(),
         position: LatLng(lat, lng),
+        icon: clusterImage,
         isCluster: true,
         clusterId: cluster.id,
         pointsSize: cluster.pointsSize,
@@ -103,7 +108,7 @@ class MapHelper {
   /// Gets a list of markers and clusters that reside within the visible bounding box for
   /// the given [currentZoom]. For more info check [Fluster.clusters].
   static List<Marker> getClusterMarkers(
-    Fluster<MapMarker> clusterManager,
+    Fluster<Markers> clusterManager,
     double currentZoom,
   ) {
     assert(currentZoom != null);
