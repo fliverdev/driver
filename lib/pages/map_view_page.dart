@@ -50,6 +50,8 @@ final String _clusterImageUrl =
     'http://i2picture.com/images/symbols/geometry/large_circle_u25EF_icon_256x256.png';
 
 class _MyMapViewPageState extends State<MyMapViewPage> {
+
+
   var currentLocation;
   var markerColor = 165.0; // fliver green marker
   var locationAnimation = 0; // used to switch between 2 kinds of animations
@@ -57,6 +59,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final zoom = [15.0, 17.5]; // zoom levels (0/1)
   final bearing = [0.0, 90.0]; // bearing level (0/1)
   final tilt = [0.0, 45.0]; // axis tilt (0/1)
+
+  double _currentZoom = 15;
 
   final displayMarkersRadius = 10000.0; // radius up to which markers are loaded
 
@@ -71,6 +75,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   bool isMarkerDeleted = false; // to check if marker was deleted
 
   GoogleMapController mapController;
+
   Future<Position> position;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   Set<Circle> hotspots = {};
@@ -78,19 +83,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       GlobalKey<ScaffoldState>(); // for snackbar
 
   @override
-  void initState() async {
-
-
-
-    final List<Markers> markersList = [];
-
-
-    _clusterManager = await MapHelper.initClusterManager(
-      markersList,
-      _minClusterZoom,
-      _maxClusterZoom,
-      _clusterImageUrl,
-    );
+  void initState() {
 
     print('initState() called');
     super.initState();
@@ -98,30 +91,48 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
     print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
 
+
+
+  void initCluster(List<Markers> markersListInit) async {
+
+
+    _clusterManager = await MapHelper.initClusterManager(
+      markersListInit,
+      _minClusterZoom,
+      _maxClusterZoom,
+      _clusterImageUrl,
+    );
+
+    _updateMarkers();
+
+  }
+
   /// Gets the markers and clusters to be displayed on the map for the current zoom level and
   /// updates state.
   void _updateMarkers([double updatedZoom]) {
-    if (_clusterManager == null || updatedZoom == zoom[0]) return;
+    if (_clusterManager == null || updatedZoom == _currentZoom) return;
 
     if (updatedZoom != null) {
-      zoom[0] = updatedZoom;
+      _currentZoom = updatedZoom;
     }
 
-
     Set<Marker>.of(markers.values)
-      ..clear()
-      ..addAll(MapHelper.getClusterMarkers(_clusterManager, zoom[0]));
+      ..clear()..addAll(MapHelper.getClusterMarkers(_clusterManager, _currentZoom));
 
   }
 
 
 
   void _onMapCreated(GoogleMapController controller) {
+
+
     print('_onMapCreated() called');
     mapController = controller;
 
     if (isFirstLaunch) {
       _fetchMarkersFromDb();
+
+
       mapController
           .setMapStyle(isThemeCurrentlyDark(context) ? darkMap2 : lightMap2);
       isFirstLaunch = false;
@@ -152,6 +163,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       }
       currentLocation = await Geolocator().getCurrentPosition();
       _populateMarkers(clients);
+
+
     });
   } // fetches markers from firestore
 
@@ -166,6 +179,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   } // deletes markers from firestore
 
   Future _populateMarkers(clients) async {
+
+    List<Markers> markersList = [];
+
     print('_populateMarkers() called');
     markers.clear();
 
@@ -181,8 +197,16 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
       var timeDiff = DateTime.now().difference(markerTimestamp);
 
+      markersList.add(
+        Markers(
+          id: MarkerId(documentId).toString(),
+          position: LatLng(markerData['position']['geopoint'].latitude,
+              markerData['position']['geopoint'].longitude),
+          icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+        ),
+      );
 
-      _updateMarkers();
+
       var distance = await Geolocator().distanceBetween(
         currentLocation.latitude.toDouble(),
         currentLocation.longitude.toDouble(),
@@ -202,6 +226,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
       );
 
+
+
+      initCluster(markersList);
 
 
       setState(() {
@@ -263,11 +290,12 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation.latitude,
                               currentLocation.longitude),
-                          zoom: zoom[0],
+                          zoom: _currentZoom,
                           bearing: bearing[0],
                           tilt: tilt[0],
                         ),
                         markers: Set<Marker>.of(markers.values),
+                        onCameraMove: (position) => _updateMarkers(position.zoom),
                       ),
                       Positioned(
                         top: 45.0,
