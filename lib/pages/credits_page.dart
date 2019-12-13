@@ -1,5 +1,6 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/sexy_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyCreditsPage extends StatefulWidget {
+  final String language;
+  MyCreditsPage({Key key, @required this.language}) : super(key: key);
+
   @override
   _MyCreditsPageState createState() => _MyCreditsPageState();
 }
@@ -46,7 +50,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                     },
                   ),
                   Text(
-                    'titleCredits',
+                    creditsTitle(widget.language),
                     style: isThemeCurrentlyDark(context)
                         ? TitleStyles.white
                         : TitleStyles.black,
@@ -82,7 +86,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'creditsContatinerName1',
+                              creditsName1(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? TitleStyles.white
                                   : TitleStyles.black,
@@ -91,7 +95,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'creditsContainerBody1',
+                              creditsContainerBody1(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? BodyStylesItalic.white
                                   : BodyStylesItalic.black,
@@ -127,7 +131,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'creditsContatinerName2',
+                              creditsName2(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? TitleStyles.white
                                   : TitleStyles.black,
@@ -136,7 +140,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'creditsContainerBody2',
+                              creditsContainerBody2(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? BodyStylesItalic.white
                                   : BodyStylesItalic.black,
@@ -171,7 +175,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'creditsContatinerName3',
+                              creditsName3(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? TitleStyles.white
                                   : TitleStyles.black,
@@ -180,7 +184,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                               height: 5.0,
                             ),
                             Text(
-                              'creditsContainerBody3',
+                              creditsContainerBody3(widget.language),
                               style: isThemeCurrentlyDark(context)
                                   ? BodyStylesItalic.white
                                   : BodyStylesItalic.black,
@@ -198,7 +202,7 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'creditsFooter',
+                          creditsFooter(widget.language),
                           style: isThemeCurrentlyDark(context)
                               ? BodyStyles.white
                               : BodyStyles.black,
@@ -209,7 +213,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             FlatButton(
-                              child: Text('creditsButton1'),
+                              child:
+                                  Text(creditsFooterButton1(widget.language)),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -218,7 +223,8 @@ class _MyCreditsPageState extends State<MyCreditsPage> {
                                   'https://github.com/fliverdev/driver'),
                             ),
                             FlatButton(
-                              child: Text('creditsButton2'),
+                              child:
+                                  Text(creditsFooterButton2(widget.language)),
                               textColor: invertColorsStrong(context),
                               shape: RoundedRectangleBorder(
                                   borderRadius:

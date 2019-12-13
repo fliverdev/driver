@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_styles.dart';
 import 'package:driver/utils/text_styles.dart';
+import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/fetching_location.dart';
 import 'package:driver/widgets/no_connection.dart';
@@ -21,8 +22,13 @@ import 'package:driver/utils/map_helper.dart';
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
   final String identity;
+  final String language;
 
-  MyMapViewPage({Key key, @required this.helper, @required this.identity})
+  MyMapViewPage(
+      {Key key,
+      @required this.helper,
+      @required this.identity,
+      @required this.language})
       : super(key: key);
 
   @override
@@ -221,9 +227,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   @override
   Widget build(BuildContext context) {
     print('Widget build() called');
-    Icon toggleLightsIcon = isThemeCurrentlyDark(context)
-        ? Icon(Icons.brightness_7)
-        : Icon(Icons.brightness_2);
 
     return OfflineBuilder(connectivityBuilder: (
       BuildContext context,
@@ -231,7 +234,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       Widget child,
     ) {
       if (connectivity == ConnectivityResult.none) {
-        return NoConnection();
+        return NoConnection(language: widget.language);
       } else {
         return child;
       }
@@ -241,7 +244,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
           future: position,
           builder: (context, data) {
             if (!data.hasData) {
-              return FetchingLocation();
+              return FetchingLocation(language: widget.language);
             } else {
               // when current location is obtained
               return Scaffold(
@@ -301,23 +304,24 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.my_location),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label:
-//                          AppLocalizations.of(context).translate('speedDial1'),
+                      label: speedial1(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () async {
                         currentLocation =
                             await Geolocator().getCurrentPosition();
-                        locationAnimation == 0
-                            ? locationAnimation = 1
-                            : locationAnimation = 0;
+                        locationAnimation = 0;
                         _animateToLocation(currentLocation, locationAnimation);
                       },
                     ),
                     SpeedDialChild(
-                      child: toggleLightsIcon,
+                      child: isThemeCurrentlyDark(context)
+                          ? Icon(Icons.brightness_7)
+                          : Icon(Icons.brightness_2),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label: toggleLightsText,
+                      label: isThemeCurrentlyDark(context)
+                          ? speedial2a(widget.language)
+                          : speedial2b(widget.language),
                       labelStyle: LabelStyles.black,
                       onTap: () {
                         DynamicTheme.of(context).setBrightness(
@@ -331,24 +335,15 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       child: Icon(Icons.info),
                       foregroundColor: invertColorsTheme(context),
                       backgroundColor: invertInvertColorsTheme(context),
-//                      label:
-//                          AppLocalizations.of(context).translate('speedDial3'),
+                      label: speedial3(widget.language),
                       labelStyle: LabelStyles.black,
-                      onTap: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        bool isTipShown3 =
-                            prefs.getBool('isTipShown3') ?? false;
-
-                        if (isTipShown3) {
-                          Navigator.push(context,
-                              CupertinoPageRoute(builder: (context) {
-                            return MyCreditsPage();
-                          }));
-                        } else {
-                          // display a tip only once
-                          prefs.setBool('isTipShown3', true);
-                        }
+                      onTap: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyCreditsPage(
+                            language: widget.language,
+                          );
+                        }));
                       },
                     ),
                   ],
