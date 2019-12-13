@@ -65,6 +65,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final markerExpireInterval =
       Duration(minutes: 15); // timeout to delete old markers
 
+
+
   bool isFirstLaunch = true; // for dark mode fix
   bool isMarkerDeleted = false; // to check if marker was deleted
 
@@ -76,7 +78,20 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       GlobalKey<ScaffoldState>(); // for snackbar
 
   @override
-  void initState() {
+  void initState() async {
+
+
+
+    final List<Markers> markersList = [];
+
+
+    _clusterManager = await MapHelper.initClusterManager(
+      markersList,
+      _minClusterZoom,
+      _maxClusterZoom,
+      _clusterImageUrl,
+    );
+
     print('initState() called');
     super.initState();
     position = _setCurrentLocation();
@@ -99,13 +114,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   }
 
-  /// Inits [Fluster] and all the markers with network images and updates the loading state.
-  void _initMarkers() async {
-
-
-
-
-  }
 
 
   void _onMapCreated(GoogleMapController controller) {
@@ -173,12 +181,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
       var timeDiff = DateTime.now().difference(markerTimestamp);
 
-      _clusterManager = await MapHelper.initClusterManager(
-        markers.values.toList(),
-        _minClusterZoom,
-        _maxClusterZoom,
-        _clusterImageUrl,
-      );
 
       _updateMarkers();
       var distance = await Geolocator().distanceBetween(
