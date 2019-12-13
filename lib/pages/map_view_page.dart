@@ -36,20 +36,22 @@ class MyMapViewPage extends StatefulWidget {
 }
 
 
-/// Minimum zoom at which the markers will cluster
-final int _minClusterZoom = 0;
-
-/// Maximum zoom at which the markers will cluster
-final int _maxClusterZoom = 19;
-
-/// [Fluster] instance used to manage the clusters
-Fluster<Markers> _clusterManager;
-
-/// Url image used on cluster markers
-final String _clusterImageUrl =
-    'http://i2picture.com/images/symbols/geometry/large_circle_u25EF_icon_256x256.png';
-
 class _MyMapViewPageState extends State<MyMapViewPage> {
+
+  /// Minimum zoom at which the markers will cluster
+  final int _minClusterZoom = 0;
+
+  /// Maximum zoom at which the markers will cluster
+  final int _maxClusterZoom = 19;
+
+  /// [Fluster] instance used to manage the clusters
+  Fluster<Markers> _clusterManager;
+
+  /// Url image used on cluster markers
+  final String _clusterImageUrl =
+      'http://i2picture.com/images/symbols/geometry/large_circle_u25EF_icon_256x256.png';
+
+
 
 
   var currentLocation;
@@ -77,7 +79,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   GoogleMapController mapController;
 
   Future<Position> position;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  static Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Set<Marker> _markers = Set<Marker>.of(markers.values);
+
   Set<Circle> hotspots = {};
   GlobalKey<ScaffoldState> scaffoldKey =
       GlobalKey<ScaffoldState>(); // for snackbar
@@ -116,7 +120,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       _currentZoom = updatedZoom;
     }
 
-    Set<Marker>.of(markers.values)
+    _markers
       ..clear()..addAll(MapHelper.getClusterMarkers(_clusterManager, _currentZoom));
 
   }
@@ -294,7 +298,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                           bearing: bearing[0],
                           tilt: tilt[0],
                         ),
-                        markers: Set<Marker>.of(markers.values),
+                        markers: _markers,
                         onCameraMove: (position) => _updateMarkers(position.zoom),
                       ),
                       Positioned(
