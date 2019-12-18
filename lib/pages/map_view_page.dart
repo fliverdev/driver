@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:driver/utils/map_marker.dart';
+import 'package:fluster/fluster.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_styles.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:driver/utils/map_helper.dart';
 
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
@@ -33,7 +35,25 @@ class MyMapViewPage extends StatefulWidget {
   _MyMapViewPageState createState() => _MyMapViewPageState();
 }
 
+
 class _MyMapViewPageState extends State<MyMapViewPage> {
+
+  /// Minimum zoom at which the markers will cluster
+  final int _minClusterZoom = 0;
+
+  /// Maximum zoom at which the markers will cluster
+  final int _maxClusterZoom = 19;
+
+  /// [Fluster] instance used to manage the clusters
+  Fluster<Markers> _clusterManager;
+
+  /// Url image used on cluster markers
+  final String _clusterImageUrl =
+      'http://i2picture.com/images/symbols/geometry/large_circle_u25EF_icon_256x256.png';
+
+
+
+
   var currentLocation;
   var markerColor = 165.0; // fliver green marker
   var locationAnimation = 0; // used to switch between 2 kinds of animations
@@ -42,6 +62,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final bearing = [0.0, 90.0]; // bearing level (0/1)
   final tilt = [0.0, 45.0]; // axis tilt (0/1)
 
+  double _currentZoom = 15;
+
   final displayMarkersRadius = 10000.0; // radius up to which markers are loaded
 
   final markerRefreshInterval =
@@ -49,30 +71,72 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final markerExpireInterval =
       Duration(minutes: 15); // timeout to delete old markers
 
+
+
   bool isFirstLaunch = true; // for dark mode fix
   bool isMarkerDeleted = false; // to check if marker was deleted
 
   GoogleMapController mapController;
+
   Future<Position> position;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  static Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Set<Marker> _markers = Set<Marker>.of(markers.values);
+
   Set<Circle> hotspots = {};
   GlobalKey<ScaffoldState> scaffoldKey =
       GlobalKey<ScaffoldState>(); // for snackbar
 
   @override
   void initState() {
+
     print('initState() called');
     super.initState();
     position = _setCurrentLocation();
     print('UUID is ${widget.identity}');
   } // gets current user location when the app launches
 
+
+
+  void initCluster(List<Markers> markersListInit) async {
+
+
+    _clusterManager = await MapHelper.initClusterManager(
+      markersListInit,
+      _minClusterZoom,
+      _maxClusterZoom,
+      _clusterImageUrl,
+    );
+
+    _updateMarkers();
+
+  }
+
+  /// Gets the markers and clusters to be displayed on the map for the current zoom level and
+  /// updates state.
+  void _updateMarkers([double updatedZoom]) {
+    if (_clusterManager == null || updatedZoom == _currentZoom) return;
+
+    if (updatedZoom != null) {
+      _currentZoom = updatedZoom;
+    }
+
+    _markers
+      ..clear()..addAll(MapHelper.getClusterMarkers(_clusterManager, _currentZoom));
+
+  }
+
+
+
   void _onMapCreated(GoogleMapController controller) {
+
+
     print('_onMapCreated() called');
     mapController = controller;
 
     if (isFirstLaunch) {
       _fetchMarkersFromDb();
+
+
       mapController
           .setMapStyle(isThemeCurrentlyDark(context) ? darkMap2 : lightMap2);
       isFirstLaunch = false;
@@ -103,6 +167,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       }
       currentLocation = await Geolocator().getCurrentPosition();
       _populateMarkers(clients);
+
+
     });
   } // fetches markers from firestore
 
@@ -117,6 +183,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   } // deletes markers from firestore
 
   Future _populateMarkers(clients) async {
+
+    List<Markers> markersList = [];
+
     print('_populateMarkers() called');
     markers.clear();
 
@@ -131,6 +200,16 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       var markerTimestamp = markerData['timestamp'].toDate();
 
       var timeDiff = DateTime.now().difference(markerTimestamp);
+
+      markersList.add(
+        Markers(
+          id: MarkerId(documentId).toString(),
+          position: LatLng(markerData['position']['geopoint'].latitude,
+              markerData['position']['geopoint'].longitude),
+          icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+        ),
+      );
+
 
       var distance = await Geolocator().distanceBetween(
         currentLocation.latitude.toDouble(),
@@ -150,6 +229,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         position: markerPosition,
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
       );
+
+
+
+      initCluster(markersList);
+
 
       setState(() {
         if (displayMarkersRadius >= distance) {
@@ -210,11 +294,12 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation.latitude,
                               currentLocation.longitude),
-                          zoom: zoom[0],
+                          zoom: _currentZoom,
                           bearing: bearing[0],
                           tilt: tilt[0],
                         ),
-                        markers: Set<Marker>.of(markers.values),
+                        markers: _markers,
+                        onCameraMove: (position) => _updateMarkers(position.zoom),
                       ),
                       Positioned(
                         top: 45.0,
