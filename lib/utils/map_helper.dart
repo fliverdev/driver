@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:driver/utils/map_marker.dart';
 import 'package:fluster/fluster.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:driver/utils/map_marker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// In here we are encapsulating all the logic required to get marker icons from url images
