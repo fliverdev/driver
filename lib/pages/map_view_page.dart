@@ -1,21 +1,17 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:driver/pages/credits_page.dart';
 import 'package:driver/utils/map_helper.dart';
 import 'package:driver/utils/map_marker.dart';
 import 'package:driver/utils/map_styles.dart';
-import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/fetching_location.dart';
 import 'package:driver/widgets/no_connection.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:fluster/fluster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,8 +43,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   Fluster<Markers> _clusterManager;
 
   /// Url image used on cluster markers
-  final String _clusterImageUrl =
-      'https://i.ibb.co/XYJyqWs/arrow-256x256.png';
+  final String _clusterImageUrl = 'https://i.ibb.co/XYJyqWs/arrow-256x256.png';
 
   var currentLocation;
   var markerColor = 165.0; // fliver green marker
@@ -67,7 +62,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final markerExpireInterval =
       Duration(minutes: 15); // timeout to delete old markers
 
-  bool isFirstLaunch = true; // for dark mode fix
   bool isMarkerDeleted = false; // to check if marker was deleted
 
   GoogleMapController mapController;
@@ -115,18 +109,10 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   void _onMapCreated(GoogleMapController controller) {
     print('_onMapCreated() called');
-    mapController = controller;
 
-    if (isFirstLaunch) {
-      _fetchMarkersFromDb();
+    controller.setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
 
-      mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap2 : lightMap2);
-      isFirstLaunch = false;
-    } else {
-      mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap2 : darkMap2);
-    } // weird fix for broken dark mode
+    _fetchMarkersFromDb();
 
     Timer.periodic(markerRefreshInterval, (Timer t) {
       print('$markerRefreshInterval seconds over, refreshing...');
@@ -266,7 +252,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                         myLocationEnabled: true,
                         myLocationButtonEnabled: false,
                         compassEnabled: false,
-                        mapToolbarEnabled: false,
+                        mapToolbarEnabled: true,
                         initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation.latitude,
                               currentLocation.longitude),
@@ -303,61 +289,18 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                     ],
                   ),
                 ),
-                floatingActionButton: SpeedDial(
-                  heroTag: 'fab',
-                  closeManually: false,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: FloatingActionButton(
+                  child: Icon(Icons.my_location),
                   foregroundColor: invertInvertColorsTheme(context),
                   backgroundColor: invertColorsTheme(context),
-                  animatedIcon: AnimatedIcons.menu_close,
-                  elevation: 5.0,
-                  children: [
-                    SpeedDialChild(
-                      child: Icon(Icons.my_location),
-                      foregroundColor: invertColorsTheme(context),
-                      backgroundColor: invertInvertColorsTheme(context),
-                      label: speedial1(widget.language),
-                      labelStyle: LabelStyles.black,
-                      onTap: () async {
-                        currentLocation =
-                            await Geolocator().getCurrentPosition();
-                        locationAnimation = 0;
-                        _animateToLocation(currentLocation, locationAnimation);
-                      },
-                    ),
-                    SpeedDialChild(
-                      child: isThemeCurrentlyDark(context)
-                          ? Icon(Icons.brightness_7)
-                          : Icon(Icons.brightness_2),
-                      foregroundColor: invertColorsTheme(context),
-                      backgroundColor: invertInvertColorsTheme(context),
-                      label: isThemeCurrentlyDark(context)
-                          ? speedial2a(widget.language)
-                          : speedial2b(widget.language),
-                      labelStyle: LabelStyles.black,
-                      onTap: () {
-                        DynamicTheme.of(context).setBrightness(
-                            Theme.of(context).brightness == Brightness.dark
-                                ? Brightness.light
-                                : Brightness.dark);
-                        _onMapCreated(mapController);
-                      },
-                    ),
-                    SpeedDialChild(
-                      child: Icon(Icons.info),
-                      foregroundColor: invertColorsTheme(context),
-                      backgroundColor: invertInvertColorsTheme(context),
-                      label: speedial3(widget.language),
-                      labelStyle: LabelStyles.black,
-                      onTap: () {
-                        Navigator.push(context,
-                            CupertinoPageRoute(builder: (context) {
-                          return MyCreditsPage(
-                            language: widget.language,
-                          );
-                        }));
-                      },
-                    ),
-                  ],
+                  tooltip: recenter(widget.language),
+                  onPressed: () async {
+                    currentLocation = await Geolocator().getCurrentPosition();
+                    locationAnimation = 0;
+                    _animateToLocation(currentLocation, locationAnimation);
+                  },
                 ),
               );
             }

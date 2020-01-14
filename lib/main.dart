@@ -1,6 +1,5 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -8,21 +7,33 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DynamicTheme(
-      defaultBrightness: Brightness.light,
-      data: (brightness) => ThemeData(
+    DateTime currentDateTime = DateTime.now();
+    DateTime startTime = DateTime(currentDateTime.year, currentDateTime.month,
+        currentDateTime.day, 6, 0); // 6AM
+    DateTime endTime = DateTime(currentDateTime.year, currentDateTime.month,
+        currentDateTime.day, 18, 0); // 6PM
+    Brightness brightness;
+
+    if (currentDateTime.isAfter(startTime) &&
+        currentDateTime.isBefore(endTime)) {
+      // 6AM to 6PM
+      // light mode
+      print('It is day!');
+      brightness = Brightness.light;
+    } else {
+      // dark mode
+      print('It is night!');
+      brightness = Brightness.dark;
+    }
+    return MaterialApp(
+      title: 'Fliver Driver',
+      theme: ThemeData(
         fontFamily: 'AvenirNextRounded',
         primaryColor: MyColors.primary,
         accentColor: MyColors.accent,
-        brightness: brightness, // default is light
+        brightness: brightness,
       ),
-      themedWidgetBuilder: (context, theme) {
-        return MaterialApp(
-          title: 'Fliver Driver',
-          theme: theme,
-          home: FirstPage(),
-        );
-      },
+      home: FirstPage(),
     );
   }
 }
