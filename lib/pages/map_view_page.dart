@@ -62,7 +62,6 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final markerExpireInterval =
       Duration(minutes: 15); // timeout to delete old markers
 
-  bool isFirstLaunch = true; // for dark mode fix
   bool isMarkerDeleted = false; // to check if marker was deleted
 
   GoogleMapController mapController;
@@ -110,18 +109,10 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   void _onMapCreated(GoogleMapController controller) {
     print('_onMapCreated() called');
-    mapController = controller;
 
-    if (isFirstLaunch) {
-      _fetchMarkersFromDb();
+    controller.setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
 
-      mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
-      isFirstLaunch = false;
-    } else {
-      mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap : darkMap);
-    } // weird fix for broken dark mode
+    _fetchMarkersFromDb();
 
     Timer.periodic(markerRefreshInterval, (Timer t) {
       print('$markerRefreshInterval seconds over, refreshing...');

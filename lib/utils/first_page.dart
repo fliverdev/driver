@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-
 class FirstPage extends StatefulWidget {
   @override
   _FirstPageState createState() => _FirstPageState();
 }
 
 class _FirstPageState extends State<FirstPage> {
-
   void firstPageChecker() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
@@ -48,7 +46,6 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget build(BuildContext context) {
-
     return Container(
       color: invertInvertColorsStrong(context), // blank screen
     );
