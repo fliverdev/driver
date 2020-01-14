@@ -295,7 +295,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                   child: Icon(Icons.my_location),
                   foregroundColor: invertInvertColorsTheme(context),
                   backgroundColor: invertColorsTheme(context),
-                  tooltip: speedial1(widget.language),
+                  tooltip: recenter(widget.language),
                   onPressed: () async {
                     currentLocation = await Geolocator().getCurrentPosition();
                     locationAnimation = 0;
