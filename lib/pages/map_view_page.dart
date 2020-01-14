@@ -121,11 +121,11 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       _fetchMarkersFromDb();
 
       mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
+          .setMapStyle(isThemeCurrentlyDark(context) ? darkMap2 : lightMap2);
       isFirstLaunch = false;
     } else {
       mapController
-          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap : darkMap);
+          .setMapStyle(isThemeCurrentlyDark(context) ? lightMap2 : darkMap2);
     } // weird fix for broken dark mode
 
     Timer.periodic(markerRefreshInterval, (Timer t) {
