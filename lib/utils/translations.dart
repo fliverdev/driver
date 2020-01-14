@@ -26,7 +26,7 @@ String onboardingPageTitle1Body1(String language) {
   if (language == 'en') {
     return 'Find out where Riders are waiting for Rickshaws';
   } else if (language == 'hi') {
-    return 'पास में सवार का पता लगाएँ और उनकी ओर दिशाएँ प्राप्त करें';
+    return 'झवळच्या भाडा ना शोध आणि त्यांच्या काढे जायचा रस्ता पण';
   } else if (language == 'mr') {
     return 'हे कसे काम करते?'; // fix
   } else {
