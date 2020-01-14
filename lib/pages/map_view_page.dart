@@ -48,7 +48,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
   /// Url image used on cluster markers
   final String _clusterImageUrl =
-      'https://i.ibb.co/sRHZm9q/hotspot-450x400.png';
+      'https://i.ibb.co/XYJyqWs/arrow-256x256.png';
 
   var currentLocation;
   var markerColor = 165.0; // fliver green marker
