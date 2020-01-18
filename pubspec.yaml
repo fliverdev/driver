@@ -9,21 +9,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  fluster: ^1.1.2
   cloud_firestore: ^0.12.9
   cupertino_icons: ^0.1.2
-  dynamic_theme: ^1.0.0
   flare_flutter: ^1.6.2
+  fluster: ^1.1.2
+  flutter_cache_manager: ^1.1.1
   flutter_offline: ^0.2.4
-  flutter_speed_dial: ^1.2.1
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21
-  share: ^0.6.3
   provider: ^3.1.0
   shared_preferences: ^0.5.3
-  url_launcher: ^5.2.4
   uuid: ^2.0.4
-  flutter_cache_manager: ^1.1.1
 
 dev_dependencies:
   flutter_test:
