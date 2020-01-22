@@ -1,8 +1,22 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
+import 'package:driver/utils/notification_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  initNotifications();
+
+  createDailyNotification(Time(9, 0, 0));
+  createDailyNotification(Time(12, 0, 0));
+  createDailyNotification(Time(17, 0, 0));
+  createDailyNotification(Time(18, 30, 0));
+  createDailyNotification(Time(20, 0, 0));
+  createDailyNotification(Time(21, 30, 0));
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,6 +39,7 @@ class MyApp extends StatelessWidget {
       print('It is night!');
       brightness = Brightness.dark;
     }
+
     return MaterialApp(
       title: 'Fliver Driver',
       theme: ThemeData(
