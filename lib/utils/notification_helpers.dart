@@ -31,8 +31,8 @@ Future<void> createDailyNotification(Time notificationTime) async {
 
   await notificationsPlugin.showDailyAtTime(
     0,
-    'Looking for a Rider?',
-    'Open Fliver and view locations!',
+    'Looking for a Rider? भाड़ा ढूंढे!',
+    'Fliver kholo aur customer ka location dekho!',
     notificationTime,
     platformSpecifics,
   );
