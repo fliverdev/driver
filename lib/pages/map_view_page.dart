@@ -110,7 +110,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   void _onMapCreated(GoogleMapController controller) {
     print('_onMapCreated() called');
 
-    controller.setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
+    mapController = controller;
+    mapController
+        .setMapStyle(isThemeCurrentlyDark(context) ? darkMap : lightMap);
 
     _fetchMarkersFromDb();
 
