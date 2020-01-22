@@ -15,7 +15,6 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:driver/widgets/notification.dart';
 
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
@@ -138,9 +137,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
       currentLocation = await Geolocator().getCurrentPosition();
       _populateMarkers(clients);
     });
-    firebaseCloudMessaging_Listeners();
-  }
-  // fetches markers from firestore
+  } // fetches markers from firestore
 
   void _deleteMarker(documentId) {
     print('_deleteMarker() called');
