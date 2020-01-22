@@ -1,4 +1,4 @@
-<p align="center"><img height="110px" width="110px" src="./branding/rickshaw.png" alt="Fliver Driver"/><img height="100px" width="315px" src="./branding/text.png" alt="Fliver Driver"/></p>
+<p align="center"><img height="110px" width="110px" src="./branding/other/rickshaw.png" alt="Fliver Driver"/><img height="100px" width="315px" src="./branding/other/text.png" alt="Fliver Driver"/></p>
 
 # Fliver Driver for iOS & Android
 
@@ -12,6 +12,10 @@ Fliver is a smartphone app to cater to the gross mismanagement of autorickshaw s
 The entire project is open source and free of charge. There are no additional costs for Riders besides for the regular metered rickshaw fare, and there is no commission that Drivers need to pay. Fliver is a completely non-profit project, created to benefit Indian citizens.
 
 This is the Driver app repository for Drivers to view areas of high demand. It is part of the Final Year Project of three Computer Engineering students.
+
+## Screenshots
+
+<p><img height="306px" width="170px" src="./branding/screener/01.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/02.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/03.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/04.png" alt="Driver for Android"/></p>
 
 ## Building
 
