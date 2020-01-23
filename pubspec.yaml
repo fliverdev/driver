@@ -1,6 +1,6 @@
 name: driver
 description: The Fliver Driver app
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -14,7 +14,7 @@ dependencies:
   flare_flutter: ^1.6.2
   fluster: ^1.1.2
   flutter_cache_manager: ^1.1.1
-  flutter_local_notifications: ^0.8.4
+  flutter_local_notifications: ^1.1.2
   flutter_offline: ^0.2.4
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21

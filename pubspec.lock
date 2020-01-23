@@ -138,7 +138,14 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4+3"
+    version: "1.1.2"
+  flutter_local_notifications_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter_offline:
     dependency: "direct main"
     description:
@@ -249,6 +256,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   provider:
     dependency: "direct main"
     description:
@@ -375,4 +389,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.9.1+hotfix.5 <2.0.0"
+  flutter: ">=1.10.0 <2.0.0"
