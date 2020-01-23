@@ -13,6 +13,8 @@ The entire project is open source and free of charge. There are no additional co
 
 This is the Driver app repository for Drivers to view areas of high demand. It is part of the Final Year Project of three Computer Engineering students.
 
+[<img height="75" width="200" src="./branding/other/google-play-badge.png" alt="Play Store"/>](https://play.google.com/store/apps/details?id=dev.fliver.driver)
+
 ## Screenshots
 
 <p><img height="306px" width="170px" src="./branding/screener/01.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/02.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/03.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/04.png" alt="Driver for Android"/></p>
