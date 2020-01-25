@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -15,7 +14,8 @@ Future<void> initNotifications() async {
   notificationsPlugin.initialize(initSettings);
 }
 
-Future<void> createDailyNotification(Time notificationTime) async {
+Future<void> createDailyNotification(
+    int notificationId, Time notificationTime) async {
   print('createDailyNotification() called');
 
   var androidSpecifics = AndroidNotificationDetails(
@@ -30,12 +30,10 @@ Future<void> createDailyNotification(Time notificationTime) async {
   var platformSpecifics = NotificationDetails(androidSpecifics, iOSSpecifics);
 
   await notificationsPlugin.showDailyAtTime(
-    0,
+    notificationId,
     'Looking for a Rider? भाड़ा ढूंढे!',
     'Fliver kholo aur customer ka location dekho!',
     notificationTime,
     platformSpecifics,
   );
-
-  print('Notification created: $notificationTime');
 }
