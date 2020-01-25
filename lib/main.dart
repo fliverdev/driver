@@ -8,12 +8,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   initNotifications();
 
-  createDailyNotification(Time(9, 0, 0));
-  createDailyNotification(Time(12, 0, 0));
-  createDailyNotification(Time(17, 0, 0));
-  createDailyNotification(Time(18, 30, 0));
-  createDailyNotification(Time(20, 0, 0));
-  createDailyNotification(Time(21, 30, 0));
+  createDailyNotification(0, Time(9, 0, 0));
+  createDailyNotification(1, Time(12, 0, 0));
+  createDailyNotification(2, Time(17, 0, 0));
+  createDailyNotification(3, Time(18, 30, 0));
+  createDailyNotification(4, Time(20, 0, 0));
+  createDailyNotification(5, Time(21, 30, 0));
 
   runApp(MyApp());
 }
