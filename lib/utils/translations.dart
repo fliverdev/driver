@@ -94,6 +94,18 @@ String onboardingPageButton(String language) {
   }
 }
 
+String shareButton(String language) {
+  if (language == 'en') {
+    return 'Share';
+  } else if (language == 'hi') {
+    return 'शेयर';
+  } else if (language == 'mr') {
+    return 'सामायिक करा';
+  } else {
+    return 'Translation error';
+  }
+}
+
 String recenter(String language) {
   if (language == 'en') {
     return 'Recenter';

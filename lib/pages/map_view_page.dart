@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver/utils/map_helper.dart';
 import 'package:driver/utils/map_marker.dart';
 import 'package:driver/utils/map_styles.dart';
+import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/fetching_location.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyMapViewPage extends StatefulWidget {
@@ -269,6 +271,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                       Positioned(
                         top: 45.0,
                         left: 20.0,
+                        right: 20.0,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
@@ -284,6 +287,26 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                       'assets/logo/text-black.png',
                                       fit: BoxFit.cover,
                                     ),
+                            ),
+                            SizedBox(
+                              width: 120.0,
+                            ),
+                            RaisedButton(
+                              child: Text(
+                                shareButton(widget.language),
+                                style: isThemeCurrentlyDark(context)
+                                    ? BodyStyles.black
+                                    : BodyStyles.white,
+                              ),
+                              color: invertColorsTheme(context),
+                              elevation: 3.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0))),
+                              onPressed: () {
+                                Share.share(
+                                    'Fliver Driver app download karo aur mere saath bhada dhundho! https://play.google.com/store/apps/details?id=dev.fliver.driver');
+                              },
                             ),
                           ],
                         ),

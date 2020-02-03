@@ -1,6 +1,6 @@
 name: driver
 description: The Fliver Driver app
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -19,6 +19,7 @@ dependencies:
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21
   provider: ^3.1.0
+  share: ^0.6.3+5
   shared_preferences: ^0.5.3
   uuid: ^2.0.4
 
