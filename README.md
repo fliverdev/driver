@@ -9,7 +9,7 @@
 
 Fliver is an app to help you easily find customers who are looking for a Rickshaw. Simply open the app and you will see their locations.
 
-The entire project is Open Source and free of charge. There are no additional costs for Riders besides for the regular metered Rickshaw fare, and there is no commission that Drivers need to pay. Fliver is a completely free and non-profit project, created to benefit Indian citizens.
+The entire project is Open Source and free of charge. There are no additional costs for Riders besides for the regular metered Rickshaw fare, and there is no commission that Drivers need to pay. Fliver is a completely free and non-profit project, created to benefit Indian citizens. Check out our [FAQ](https://fliverdev.github.io/faq/) to learn more.
 
 This is the Driver app repository for Rickshaw Drivers to view customer locations. It is part of the Final Year Project of three Computer Engineering students.
 
@@ -48,4 +48,4 @@ Take a look at the entire list of [contributors](https://github.com/fliverdev/dr
 
 ## Legal
 
-This project is licensed under the GNU GPL v3 - see the [LICENSE](LICENSE) file for details. Also view our [privacy policy](PRIVACY_POLICY.md).
+This project is licensed under the GNU GPL v3 - see the [LICENSE](LICENSE) file for details. Also view our [Privacy Policy](https://fliverdev.github.io/privacy_policy/) for additional legal information.
