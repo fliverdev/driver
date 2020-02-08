@@ -1,17 +1,17 @@
 <p align="center"><img height="110px" width="110px" src="./branding/other/rickshaw.png" alt="Fliver Driver"/><img height="100px" width="315px" src="./branding/other/text.png" alt="Fliver Driver"/></p>
 
-# Fliver Driver for iOS & Android
+# Fliver Driver for Android
 
 [![Stars](https://img.shields.io/github/stars/fliverdev/driver.svg)](https://github.com/fliverdev/driver/stargazers)
 [![Forks](https://img.shields.io/github/forks/fliverdev/driver.svg)](https://github.com/fliverdev/driver/network/members)
 [![Issues](https://img.shields.io/github/issues/fliverdev/driver.svg)](https://github.com/fliverdev/driver/issues)
 [![License](https://img.shields.io/github/license/fliverdev/driver.svg)](https://opensource.org/licenses/GPL-3.0)
 
-Fliver is a smartphone app to cater to the gross mismanagement of autorickshaw services in India. When you need an autorickshaw, you can simply open the app and mark your location. When there are 3 or more Riders in the same area, Drivers get notified and can view the areas of high demand, and accordingly come to pick Riders up.
+Fliver is an app to help you easily find customers who are looking for a Rickshaw. Simply open the app and you will see their locations.
 
-The entire project is open source and free of charge. There are no additional costs for Riders besides for the regular metered rickshaw fare, and there is no commission that Drivers need to pay. Fliver is a completely non-profit project, created to benefit Indian citizens.
+The entire project is Open Source and free of charge. There are no additional costs for Riders besides for the regular metered Rickshaw fare, and there is no commission that Drivers need to pay. Fliver is a completely free and non-profit project, created to benefit Indian citizens.
 
-This is the Driver app repository for Drivers to view areas of high demand. It is part of the Final Year Project of three Computer Engineering students.
+This is the Driver app repository for Rickshaw Drivers to view customer locations. It is part of the Final Year Project of three Computer Engineering students.
 
 [<img height="75" width="200" src="./branding/other/google-play-badge.png" alt="Play Store"/>](https://play.google.com/store/apps/details?id=dev.fliver.driver)
 
@@ -38,7 +38,7 @@ Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details on how 
 
 ## Credits
 
-This project is primarily developed by a bunch of Computer Engineering students at NMIMS's MPSTME:
+This project is primarily developed by a trio of Computer Engineering students at NMIMS's MPSTME:
 
 -   [Urmil Shroff](https://github.com/urmilshroff)
 -   [Priyansh Ramnani](https://github.com/prince1998)
