@@ -289,7 +289,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                     ),
                             ),
                             SizedBox(
-                              width: 120.0,
+                              width: 130.0,
                             ),
                             RaisedButton(
                               child: Text(
