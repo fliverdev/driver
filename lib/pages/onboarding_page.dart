@@ -1,4 +1,5 @@
 import 'package:driver/pages/map_view_page.dart';
+import 'package:driver/services/firebase_analytics.dart';
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/translations.dart';
@@ -71,6 +72,7 @@ class MyOnboardingPage1 extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
                         helper.setString('language', 'en');
+                        logAnalyticsEvent('english');
 
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
@@ -93,6 +95,7 @@ class MyOnboardingPage1 extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
                         helper.setString('language', 'hi');
+                        logAnalyticsEvent('hindi');
 
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {
@@ -115,6 +118,7 @@ class MyOnboardingPage1 extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       onPressed: () {
                         helper.setString('language', 'mr');
+                        logAnalyticsEvent('marathi');
 
                         Navigator.push(context,
                             CupertinoPageRoute(builder: (context) {

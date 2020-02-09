@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:driver/services/firebase_analytics.dart';
 import 'package:driver/utils/map_helper.dart';
 import 'package:driver/utils/map_marker.dart';
 import 'package:driver/utils/map_styles.dart';
@@ -306,6 +307,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                               onPressed: () {
                                 Share.share(
                                     'Fliver Driver app download karo aur mere saath bhada dhundho! https://play.google.com/store/apps/details?id=dev.fliver.driver');
+                                logAnalyticsEvent('driver_share');
                               },
                             ),
                           ],
