@@ -100,7 +100,19 @@ String shareButton(String language) {
   } else if (language == 'hi') {
     return 'शेयर';
   } else if (language == 'mr') {
-    return 'सामायिक करा';
+    return 'सामायिक';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String chat(String language) {
+  if (language == 'en') {
+    return 'Chat';
+  } else if (language == 'hi') {
+    return 'बातचीत';
+  } else if (language == 'mr') {
+    return 'गप्पा';
   } else {
     return 'Translation error';
   }

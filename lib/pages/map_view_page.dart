@@ -19,6 +19,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'chat_page.dart';
+
 class MyMapViewPage extends StatefulWidget {
   final SharedPreferences helper;
   final String identity;
@@ -318,16 +320,42 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                 ),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.my_location),
-                  foregroundColor: invertInvertColorsTheme(context),
-                  backgroundColor: invertColorsTheme(context),
-                  tooltip: recenter(widget.language),
-                  onPressed: () async {
-                    currentLocation = await Geolocator().getCurrentPosition();
-                    locationAnimation = 0;
-                    _animateToLocation(currentLocation, locationAnimation);
-                  },
+                floatingActionButton: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    FloatingActionButton(
+                      heroTag: 'chat',
+                      child: Icon(Icons.message),
+                      foregroundColor: invertInvertColorsTheme(context),
+                      backgroundColor: invertColorsTheme(context),
+                      tooltip: chat(widget.language),
+                      onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) {
+                          return MyChatPage(
+                            helper: widget.helper,
+                            language: widget.language,
+                          );
+                        }));
+                      },
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    FloatingActionButton(
+                      child: Icon(Icons.my_location),
+                      foregroundColor: invertInvertColorsTheme(context),
+                      backgroundColor: invertColorsTheme(context),
+                      tooltip: recenter(widget.language),
+                      onPressed: () async {
+                        currentLocation =
+                            await Geolocator().getCurrentPosition();
+                        locationAnimation = 0;
+                        _animateToLocation(currentLocation, locationAnimation);
+                      },
+                    )
+                  ],
                 ),
               );
             }
