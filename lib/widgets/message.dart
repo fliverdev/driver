@@ -50,7 +50,7 @@ class Message extends StatelessWidget {
                       isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '$senderName says:',
+                      isMe ? 'You:' : '$senderName says:',
                       style: isMe
                           ? MessageSenderStyles.black
                           : isThemeCurrentlyDark(context)

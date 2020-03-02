@@ -10,12 +10,13 @@ import 'package:driver/widgets/message.dart';
 import 'package:driver/widgets/message_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyChatPage extends StatefulWidget {
   final SharedPreferences helper;
-  final LatLng location;
+  final Position location;
   final String language;
 
   MyChatPage({
@@ -71,6 +72,17 @@ class _MyChatPageState extends State<MyChatPage> {
           timestamp: messageTimestamp,
         );
       }
+    } else {
+      return Message(
+        isMe: identity == doc.data['senderId'],
+        isNear: true,
+        senderId: doc.data['senderId'],
+        senderName: doc.data['senderName'],
+        messageText: doc.data['messageText'],
+        destination: doc.data['destination'],
+        location: messageLocation,
+        timestamp: messageTimestamp,
+      );
     }
   }
 
