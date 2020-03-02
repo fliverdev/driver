@@ -335,6 +335,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                             CupertinoPageRoute(builder: (context) {
                           return MyChatPage(
                             helper: widget.helper,
+                            location: currentLocation,
                             language: widget.language,
                           );
                         }));
