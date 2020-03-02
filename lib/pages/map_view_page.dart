@@ -170,6 +170,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
       var markerPosition = LatLng(markerData['position']['geopoint'].latitude,
           markerData['position']['geopoint'].longitude);
+      final markerDestination = markerData['destination'];
       var markerTimestamp = markerData['timestamp'].toDate();
 
       var timeDiff = DateTime.now().difference(markerTimestamp);
@@ -200,6 +201,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         markerId: markerId,
         position: markerPosition,
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
+        infoWindow: InfoWindow(
+            title: markerDestination == null ? '' : markerDestination),
       );
 
       initCluster(markersList);
