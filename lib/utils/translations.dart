@@ -118,6 +118,42 @@ String chat(String language) {
   }
 }
 
+String loadingMessages(String language) {
+  if (language == 'en') {
+    return 'Loading messages...';
+  } else if (language == 'hi') {
+    return 'लोड हो रहा है...';
+  } else if (language == 'mr') {
+    return 'लोड करीत आहे...';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String messagePlaceholderText(String language) {
+  if (language == 'en') {
+    return 'Talk to others';
+  } else if (language == 'hi') {
+    return 'दूसरों से बात करें';
+  } else if (language == 'mr') {
+    return 'इतरांशी बोला';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String sendMessageText(String language) {
+  if (language == 'en') {
+    return 'Send message';
+  } else if (language == 'hi') {
+    return 'मेसेज भेजें';
+  } else if (language == 'mr') {
+    return 'संदेश पाठवा';
+  } else {
+    return 'Translation error';
+  }
+}
+
 String recenter(String language) {
   if (language == 'en') {
     return 'Recenter';

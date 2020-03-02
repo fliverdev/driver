@@ -168,13 +168,14 @@ class _MyChatPageState extends State<MyChatPage> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData)
-                      return messagePlaceholder(context, 'Loading messages...');
+                      return messagePlaceholder(
+                          context, loadingMessages(widget.language));
 
                     List<DocumentSnapshot> docs = snapshot.data.documents;
 
                     if (docs.isEmpty)
-                      return messagePlaceholder(context,
-                          'You can chat with all Fliver users\nto discuss traffic related issues');
+                      return messagePlaceholder(
+                          context, messagePlaceholderText(widget.language));
 
                     List<Widget> messages = docs
                         .map((doc) => _messageChecker(doc, docs, identity))
@@ -229,7 +230,7 @@ class _MyChatPageState extends State<MyChatPage> {
                       controller: _messageController,
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
-                        hintText: 'Message in global chat',
+                        hintText: sendMessageText(widget.language),
                         border: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: invertColorsStrong(context),
