@@ -1,20 +1,11 @@
 import 'package:driver/utils/colors.dart';
 import 'package:driver/utils/first_page.dart';
-import 'package:driver/utils/notification_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  initNotifications();
-
-  createDailyNotification(0, Time(9, 0, 0));
-  createDailyNotification(1, Time(12, 0, 0));
-  createDailyNotification(2, Time(17, 0, 0));
-  createDailyNotification(3, Time(18, 30, 0));
-  createDailyNotification(4, Time(20, 0, 0));
-  createDailyNotification(5, Time(21, 30, 0));
-
+  FlutterLocalNotificationsPlugin().cancelAll();
   runApp(MyApp());
 }
 
