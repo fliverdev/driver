@@ -1,21 +1,28 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:driver/services/censor.dart';
+import 'package:driver/services/firebase_analytics.dart';
 import 'package:driver/utils/text_styles.dart';
 import 'package:driver/utils/translations.dart';
 import 'package:driver/utils/ui_helpers.dart';
 import 'package:driver/widgets/message.dart';
-import 'package:flare_flutter/flare_actor.dart';
+import 'package:driver/widgets/message_placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyChatPage extends StatefulWidget {
   final SharedPreferences helper;
+  final Position location;
   final String language;
 
   MyChatPage({
     Key key,
     @required this.helper,
+    @required this.location,
     @required this.language,
   }) : super(key: key);
 
@@ -24,9 +31,12 @@ class MyChatPage extends StatefulWidget {
 }
 
 class _MyChatPageState extends State<MyChatPage> {
+  bool noHotspotMessages = true;
   bool isScrollDownVisible = true;
   TextEditingController _messageController = TextEditingController();
   ScrollController _scrollController = ScrollController();
+  final messageExpireInterval =
+      Duration(hours: 1); // timeout to delete old messages
 
   void _scrollDown() {
     _scrollController.animateTo(
@@ -36,9 +46,52 @@ class _MyChatPageState extends State<MyChatPage> {
     );
   }
 
-  Future<void> _sendMessage() async {
+  Message _messageChecker(
+      DocumentSnapshot doc, List<DocumentSnapshot> docs, String identity) {
+    final messageTimestamp = doc.data['timestamp'].toDate();
+    final timeDiff = DateTime.now().difference(messageTimestamp);
+    final messageLocation = LatLng(doc.data['location']['geopoint'].latitude,
+        doc.data['location']['geopoint'].longitude);
+
+    if (timeDiff > messageExpireInterval) {
+      // if expired, delete the message
+      final documentId = doc.documentID;
+      Firestore.instance
+          .collection('global_chat')
+          .document(documentId)
+          .delete();
+      if (docs.length <= 1) {
+        return Message(
+          isMe: identity == doc.data['senderId'],
+          isNear: false,
+          senderId: null,
+          senderName: null,
+          messageText: null,
+          destination: null,
+          location: messageLocation,
+          timestamp: messageTimestamp,
+        );
+      }
+    } else {
+      return Message(
+        isMe: identity == doc.data['senderId'],
+        isNear: true,
+        senderId: doc.data['senderId'],
+        senderName: doc.data['senderName'],
+        messageText: doc.data['messageText'],
+        destination: doc.data['destination'],
+        location: messageLocation,
+        timestamp: messageTimestamp,
+      );
+    }
+  }
+
+  Future<void> _sendMessage(TextEditingController messageController) async {
     String name = widget.helper.getString('userName');
     String identity = widget.helper.getString('uuid');
+    String messageText = messageController.text;
+
+    messageController.clear();
 
     if (name == null) {
       int random = Random().nextInt(1000); // 0 to 999
@@ -46,16 +99,22 @@ class _MyChatPageState extends State<MyChatPage> {
       widget.helper.setString('userName', name);
     }
 
-    if (_messageController.text.length > 0) {
-      await Firestore.instance.collection('messages').add({
+    if (messageText.length > 0) {
+      GeoFirePoint geoPoint = Geoflutterfire().point(
+          latitude: widget.location.latitude,
+          longitude: widget.location.longitude);
+      messageText = censor(messageText);
+
+      await Firestore.instance.collection('global_chat').add({
         'senderId': identity,
         'senderName': name,
-        'messageText': _messageController.text,
-        'timestamp': DateTime.now().toIso8601String().toString(),
+        'messageText': messageText,
+        'destination': null,
+        'location': geoPoint.data,
+        'timestamp': DateTime.now(),
       });
-
-      _messageController.clear();
       _scrollDown();
+      logAnalyticsEvent('message_sent_driver');
     }
   }
 
@@ -104,32 +163,22 @@ class _MyChatPageState extends State<MyChatPage> {
                 ),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance
-                      .collection('messages')
+                      .collection('global_chat')
                       .orderBy('timestamp')
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData)
-                      return Center(
-                        child: Container(
-                          width: 100.0,
-                          height: 100.0,
-                          child: FlareActor(
-                            'assets/flare/loading.flr',
-                            animation: 'animation',
-                          ),
-                        ),
-                      );
+                      return messagePlaceholder(
+                          context, loadingMessages(widget.language));
 
                     List<DocumentSnapshot> docs = snapshot.data.documents;
 
+                    if (docs.isEmpty)
+                      return messagePlaceholder(
+                          context, messagePlaceholderText(widget.language));
+
                     List<Widget> messages = docs
-                        .map((doc) => Message(
-                              isMe: identity == doc.data['senderId'],
-                              senderId: doc.data['senderId'],
-                              senderName: doc.data['senderName'],
-                              messageText: doc.data['messageText'],
-                              timestamp: doc.data['timestamp'],
-                            ))
+                        .map((doc) => _messageChecker(doc, docs, identity))
                         .toList();
 
                     return Stack(
@@ -181,7 +230,7 @@ class _MyChatPageState extends State<MyChatPage> {
                       controller: _messageController,
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
-                        hintText: 'Type a message...',
+                        hintText: sendMessageText(widget.language),
                         border: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: invertColorsStrong(context),
@@ -206,7 +255,7 @@ class _MyChatPageState extends State<MyChatPage> {
                     elevation: 5.0,
                     tooltip: 'Send',
                     onPressed: () {
-                      _sendMessage();
+                      _sendMessage(_messageController);
                       setState(() {
                         isScrollDownVisible = false;
                       });
