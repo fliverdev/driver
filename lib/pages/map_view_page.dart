@@ -51,9 +51,9 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   final String _clusterImageUrl = 'https://i.ibb.co/XYJyqWs/arrow-256x256.png';
 
   var currentLocation;
-  var markerColor = 165.0; // fliver green marker
   var locationAnimation = 0; // used to switch between 2 kinds of animations
 
+  final markerColor = 165.0; // fliver green marker
   final zoom = [15.0, 17.5]; // zoom levels (0/1)
   final bearing = [0.0, 90.0]; // bearing level (0/1)
   final tilt = [0.0, 45.0]; // axis tilt (0/1)
@@ -136,8 +136,8 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
   void _fetchMarkersFromDb() {
     print('_fetchMarkersFromDb() called');
     Firestore.instance.collection('markers').getDocuments().then((docs) async {
-      var docLength = docs.documents.length;
-      var clients = List(docLength);
+      final docLength = docs.documents.length;
+      final clients = List(docLength);
       for (int i = 0; i < docLength; i++) {
         clients[i] = docs.documents[i];
       }
@@ -164,16 +164,16 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
 
     for (int i = 0; i < clients.length; i++) {
       print('_populateMarkers() loop ${i + 1}/${clients.length}');
-      var documentId = clients[i].documentID;
-      var markerId = MarkerId(documentId);
-      var markerData = clients[i].data;
+      final documentId = clients[i].documentID;
+      final markerId = MarkerId(documentId);
+      final markerData = clients[i].data;
 
-      var markerPosition = LatLng(markerData['position']['geopoint'].latitude,
+      final markerPosition = LatLng(markerData['position']['geopoint'].latitude,
           markerData['position']['geopoint'].longitude);
       final markerDestination = markerData['destination'];
-      var markerTimestamp = markerData['timestamp'].toDate();
+      final markerTimestamp = markerData['timestamp'].toDate();
 
-      var timeDiff = DateTime.now().difference(markerTimestamp);
+      final timeDiff = DateTime.now().difference(markerTimestamp);
 
       markersList.add(
         Markers(
@@ -184,7 +184,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         ),
       );
 
-      var distance = await Geolocator().distanceBetween(
+      final distance = await Geolocator().distanceBetween(
         currentLocation.latitude.toDouble(),
         currentLocation.longitude.toDouble(),
         markerPosition.latitude.toDouble(),
@@ -197,7 +197,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         _deleteMarker(documentId);
         isMarkerDeleted = true;
       }
-      var marker = Marker(
+      final marker = Marker(
         markerId: markerId,
         position: markerPosition,
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
