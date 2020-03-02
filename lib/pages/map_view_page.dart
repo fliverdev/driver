@@ -197,12 +197,14 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
         _deleteMarker(documentId);
         isMarkerDeleted = true;
       }
+
       final marker = Marker(
         markerId: markerId,
         position: markerPosition,
         icon: BitmapDescriptor.defaultMarkerWithHue(markerColor),
         infoWindow: InfoWindow(
             title: markerDestination == null ? '' : markerDestination),
+        // marker ontap doesn't show the infowindow
       );
 
       initCluster(markersList);
