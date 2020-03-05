@@ -182,9 +182,33 @@ String fetchingLocation(String language) {
   if (language == 'en') {
     return 'Fetching location...';
   } else if (language == 'hi') {
-    return 'आपका लोकेशन ढूंढ रहे है';
+    return 'आपका लोकेशन ढूंढ रहे है...';
   } else if (language == 'mr') {
-    return 'आपले लोकेशन शोधत आहे';
+    return 'आपले लोकेशन शोधत आहे...';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String markerTextDestination(String language, String destination) {
+  if (language == 'en') {
+    return 'Going to $destination';
+  } else if (language == 'hi') {
+    return '$destination जा रहा हैं';
+  } else if (language == 'mr') {
+    return '$destination जाता आहे';
+  } else {
+    return 'Translation error';
+  }
+}
+
+String markerTextLooking(String language) {
+  if (language == 'en') {
+    return 'Looking for a Rickshaw';
+  } else if (language == 'hi') {
+    return 'ऑटो की तलाश में हैं';
+  } else if (language == 'mr') {
+    return 'ऑटो शोधत आहे';
   } else {
     return 'Translation error';
   }
