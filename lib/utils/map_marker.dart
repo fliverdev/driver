@@ -12,11 +12,13 @@ class Markers extends Clusterable {
   final String id;
   final LatLng position;
   final BitmapDescriptor icon;
+  final InfoWindow infoWindow;
 
   Markers({
     @required this.id,
     @required this.position,
     @required this.icon,
+    @required this.infoWindow,
     isCluster = false,
     clusterId,
     pointsSize,
@@ -38,5 +40,6 @@ class Markers extends Clusterable {
           position.longitude,
         ),
         icon: icon,
+        infoWindow: infoWindow,
       );
 }
