@@ -313,7 +313,7 @@ class _MyMapViewPageState extends State<MyMapViewPage> {
                                       BorderRadius.all(Radius.circular(5.0))),
                               onPressed: () {
                                 Share.share(
-                                    'Fliver Driver app download karo aur mere saath bhada dhundho! https://play.google.com/store/apps/details?id=dev.fliver.driver');
+                                    'Fliver app download karo aur free mein mere saath bhada dhundho! https://play.google.com/store/apps/details?id=dev.fliver.driver');
                                 logAnalyticsEvent('driver_share');
                               },
                             ),
