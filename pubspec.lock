@@ -42,7 +42,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.4"
+    version: "0.13.4+2"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -91,7 +91,14 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "0.1.3"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   firebase:
     dependency: transitive
     description:
@@ -133,14 +140,14 @@ packages:
       name: flare_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.5"
+    version: "2.3.3"
   flare_flutter:
     dependency: "direct main"
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.3"
+    version: "2.0.1"
   fluster:
     dependency: "direct main"
     description:
@@ -173,7 +180,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.2"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
@@ -187,7 +194,14 @@ packages:
       name: flutter_offline
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4+1"
+    version: "0.3.0"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -211,21 +225,21 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.5"
+    version: "5.3.0"
   google_api_availability:
     dependency: transitive
     description:
       name: google_api_availability
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.3"
   google_maps_flutter:
     dependency: "direct main"
     description:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.21+12"
+    version: "0.5.24+1"
   http:
     dependency: transitive
     description:
@@ -260,7 +274,7 @@ packages:
       name: location_permissions
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.5"
   matcher:
     dependency: transitive
     description:
@@ -275,6 +289,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   path:
     dependency: transitive
     description:
@@ -323,7 +344,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0+1"
+    version: "4.0.4"
   quiver:
     dependency: transitive
     description:
@@ -351,14 +372,35 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3+5"
+    version: "0.6.3+6"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4+5"
+    version: "0.5.6+3"
+  shared_preferences_macos:
+    dependency: transitive
+    description:
+      name: shared_preferences_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+6"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2+4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -419,7 +461,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.14"
+    version: "0.2.15"
   typed_data:
     dependency: transitive
     description:
@@ -457,4 +499,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.7.0-dev <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"
