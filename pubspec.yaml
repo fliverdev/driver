@@ -1,6 +1,6 @@
 name: driver
 description: The Fliver Driver app
-version: 1.0.4+6
+version: 2.0.0+7
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
