@@ -41,6 +41,12 @@ Replace the encrypted `AndroidManifest.xml` with the following contents, and rep
         <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="YOUR_API_KEY"/>
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 </manifest>
