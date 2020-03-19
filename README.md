@@ -17,7 +17,7 @@ This is the Driver app repository for Rickshaw Drivers to view customer location
 
 ## Screenshots
 
-<p><img height="306px" width="170px" src="./branding/screener/01.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/02.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/03.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/04.png" alt="Driver for Android"/> <img height="306px" width="170px" src="./branding/screener/05.png" alt="Driver for Android"/></p>
+<p><img height="320px" width="160px" src="./branding/screenshots/01.png" alt="Driver for Android"/> <img height="320px" width="160px" src="./branding/screenshots/02.png" alt="Driver for Android"/> <img height="320px" width="160px" src="./branding/screenshots/03.png" alt="Driver for Android"/> <img height="320px" width="160px" src="./branding/screenshots/04.png" alt="Driver for Android"/> <img height="320px" width="160px" src="./branding/screenshots/05.png" alt="Driver for Android"/></p>
 
 ## Building
 
